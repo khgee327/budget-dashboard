@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>온살 & 루메아카이브 PPL 및 시딩 재고 통합 관리 대시보드</title>
+  <title>온살 &amp; 루메아카이브 마케팅 예산 대시보드</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%23ec4899%22><path d=%22M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z%22/></svg>">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -89,8 +89,8 @@
   <style>
     /* ============ 화이트 사이드바 스킨 ============ */
     :root{
-      --pk-500:#EC4899; --pk-600:#DB2777; --pk-700:#BE185D;
-      --pk-100:#FCE7F3; --pk-50:#FDF2F8;
+      --pk-500:#2563EB; --pk-600:#1D4ED8; --pk-700:#1E40AF;
+      --pk-100:#DBEAFE; --pk-50:#EFF6FF;
       --page-bg:#F7F6F4; --line:#ECEAE6; --line-soft:#F2F0EC;
     }
     body{ background:var(--page-bg); }
@@ -104,7 +104,7 @@
     .side-nav::-webkit-scrollbar{ width:4px }
     .side-nav::-webkit-scrollbar-thumb{ background:#E2DFDA; border-radius:4px }
     .side-brand{ display:flex; align-items:center; gap:10px; padding:2px 6px 16px; }
-    .side-logo{ width:34px; height:34px; flex:none; border-radius:12px; background:var(--pk-500);
+    .side-logo{ width:34px; height:34px; flex:none; border-radius:12px; background:#2563eb;
       color:#fff; display:flex; align-items:center; justify-content:center; font-size:15px; }
     .side-title{ color:#1F1F1E; font-size:13.5px; font-weight:800; line-height:1.25; }
     .side-sub{ color:#8B8981; font-size:11px; font-weight:600; }
@@ -228,7 +228,7 @@
 
   <style>
     /* 표 머리글 · 섹션 옅은 핑크 배경 → 회색 한 톤 */
-    .app-main thead[class*="bg-pink-50"], .app-main [class*="bg-pink-50"]{ background-color:#FAFAF9 !important }
+    .app-main thead[class*="bg-blue-50"], .app-main [class*="bg-blue-50"]{ background-color:#FAFAF9 !important }
     .app-main [class*="bg-rose-50"], .app-main [class*="bg-amber-50"]{ background-color:#FAFAF9 !important }
     /* 그룹 행 강조는 왼쪽 세로선으로만 */
     tr[data-bucket="planned"], tr[data-bucket="active"]{ background:transparent !important }
@@ -241,11 +241,11 @@
   <style>
     /* ============ 버튼 색 복구 + 글씨 크기 ============ */
     /* 500단계 버튼이 옅은 배경 규칙에 잘못 걸리던 문제 수정 */
-    .app-main .bg-pink-500{ background-color:#EC4899 !important; }
-    .app-main .hover\:bg-pink-600:hover{ background-color:#DB2777 !important; }
+    .app-main .bg-blue-500{ background-color:#EC4899 !important; }
+    .app-main .hover\:bg-blue-600:hover{ background-color:#DB2777 !important; }
     .app-main .bg-rose-500, .app-main .bg-blue-500, .app-main .bg-green-500,
     .app-main .bg-lime-500, .app-main .bg-fuchsia-500{ background-color:#262624 !important; color:#fff !important; }
-    .app-main .bg-pink-500, .app-main .bg-rose-500{ color:#fff !important; }
+    .app-main .bg-blue-500, .app-main .bg-rose-500{ color:#fff !important; }
 
     /* 글씨 한 단계 키우기 */
     .app-main{ font-size:calc(14px * var(--fs,1)); }
@@ -279,10 +279,10 @@
 
   <aside id="sideNav" class="side-nav">
     <div class="side-brand">
-      <div class="side-logo"><i class="fa-solid fa-heart"></i></div>
+      <div class="side-logo"><i class="fa-solid fa-wallet"></i></div>
       <div class="min-w-0">
         <h1 class="side-title">온살 &amp; 루메아카이브</h1>
-        <p class="side-sub">마케팅 대시보드</p>
+        <p class="side-sub">마케팅 예산 대시보드</p>
       </div>
     </div>
 
@@ -325,6 +325,7 @@
         <span id="uiScaleLabel">100%</span>
         <button onclick="setUiScale(1)" title="글씨 크게">A+</button>
       </div>
+      <button id="viewLinkBtn" onclick="viewLinkCopy()" class="side-util" style="color:#1d4ed8;background:#eff6ff"><i class="fa-solid fa-link" style="color:#2563eb"></i> 보기 전용 링크 복사</button>
       <button onclick="toggleSideNav()" class="side-util"><i class="fa-solid fa-left-right"></i> 사이드바 접기 · 넓게 보기</button>
       <button onclick="openBackupModal()" class="side-util"><i class="fa-solid fa-shield-halved"></i> 백업</button>
       <button onclick="toggleCompactTable()" id="compactTableBtn" class="side-util"><i class="fa-solid fa-table-columns"></i> <span id="compactTableLabel">표 간단히 보기</span></button>
@@ -344,9 +345,9 @@
     </div>
 
     <!-- 브랜드 선택 -->
-    <div class="flex flex-wrap items-center justify-between gap-3 bg-white p-2 rounded-2xl border border-pink-100 shadow-xs">
-      <div class="flex flex-wrap gap-1 p-1 bg-pink-50 rounded-xl border border-pink-100 text-sm font-bold">
-        <button onclick="setMonthlyBrand('전체')" id="mtab-전체" class="px-5 py-2 rounded-lg bg-white text-pink-600 shadow-xs transition flex items-center gap-1.5">
+    <div class="flex flex-wrap items-center justify-between gap-3 bg-white p-2 rounded-2xl border border-blue-100 shadow-xs">
+      <div class="flex flex-wrap gap-1 p-1 bg-blue-50 rounded-xl border border-blue-100 text-sm font-bold">
+        <button onclick="setMonthlyBrand('전체')" id="mtab-전체" class="px-5 py-2 rounded-lg bg-white text-blue-600 shadow-xs transition flex items-center gap-1.5">
           <i class="fa-solid fa-layer-group text-xs"></i> 전체 보기
         </button>
         <button onclick="setMonthlyBrand('온살')" id="mtab-온살" class="px-5 py-2 rounded-lg text-slate-500 hover:text-slate-800 transition flex items-center gap-1.5">
@@ -359,19 +360,19 @@
       <span id="monthlyBrandNote" class="text-xs font-bold text-slate-500 pr-2"></span>
     </div>
 
-    <section class="bg-white p-5 rounded-2xl border border-pink-100 shadow-sm space-y-4">
+    <section class="bg-white p-5 rounded-2xl border border-blue-100 shadow-sm space-y-4">
       <div class="flex flex-wrap justify-between items-center gap-3">
         <div class="flex items-center gap-3">
           <h2 class="text-base font-bold text-slate-800 flex items-center gap-2">
-            <i class="fa-solid fa-chart-column text-pink-500"></i> 월간 총 협업 현황
+            <i class="fa-solid fa-chart-column text-blue-500"></i> 월간 총 협업 현황
           </h2>
-          <span id="monthlyTitle" class="text-base font-black text-pink-600"></span>
+          <span id="monthlyTitle" class="text-base font-black text-blue-600"></span>
         </div>
         <div class="flex flex-wrap items-center gap-2">
           <div class="flex items-center gap-1">
-            <button onclick="moveMonthly(-1)" class="p-2 hover:bg-pink-50 rounded-xl text-slate-600 text-xs"><i class="fa-solid fa-chevron-left"></i></button>
-            <button onclick="moveMonthly(0)" class="px-3 py-1.5 text-xs font-semibold border border-pink-200 rounded-xl hover:bg-pink-50 text-pink-700">이번 달</button>
-            <button onclick="moveMonthly(1)" class="p-2 hover:bg-pink-50 rounded-xl text-slate-600 text-xs"><i class="fa-solid fa-chevron-right"></i></button>
+            <button onclick="moveMonthly(-1)" class="p-2 hover:bg-blue-50 rounded-xl text-slate-600 text-xs"><i class="fa-solid fa-chevron-left"></i></button>
+            <button onclick="moveMonthly(0)" class="px-3 py-1.5 text-xs font-semibold border border-blue-200 rounded-xl hover:bg-blue-50 text-blue-700">이번 달</button>
+            <button onclick="moveMonthly(1)" class="p-2 hover:bg-blue-50 rounded-xl text-slate-600 text-xs"><i class="fa-solid fa-chevron-right"></i></button>
           </div>
         </div>
       </div>
@@ -395,7 +396,7 @@
 
       <div class="overflow-x-auto custom-scrollbar">
         <table class="w-full text-left text-xs">
-          <thead class="bg-pink-50/60 text-slate-600 font-semibold border-y border-pink-100">
+          <thead class="bg-blue-50/60 text-slate-600 font-semibold border-y border-blue-100">
             <tr>
               <th class="py-2.5 px-3">구분</th>
               <th class="py-2.5 px-3 text-center">온살</th>
@@ -444,22 +445,22 @@
     </section>
 
     <!-- 상세: 누가 언제 업로드했는지 -->
-    <section class="bg-white p-5 rounded-2xl border border-pink-100 shadow-sm space-y-4">
-      <div class="flex flex-wrap gap-3 justify-between items-center border-b border-pink-50 pb-3">
+    <section class="bg-white p-5 rounded-2xl border border-blue-100 shadow-sm space-y-4">
+      <div class="flex flex-wrap gap-3 justify-between items-center border-b border-blue-50 pb-3">
         <div>
           <h2 class="text-base font-bold text-slate-800 flex items-center gap-2">
-            <i class="fa-solid fa-list-check text-pink-500"></i> 업로드 상세 내역
+            <i class="fa-solid fa-list-check text-blue-500"></i> 업로드 상세 내역
             <span id="monthlyDetailCount" class="text-xs font-bold px-2 py-0.5 bg-pink-100 text-pink-700 rounded-full">0건</span>
           </h2>
           <p class="text-xs text-slate-500">PPL · 앰버서더 · 크리에이터 · 체험단을 한 표에서 봅니다. 회색 배지는 아직 업로드 전(예정)이에요.</p>
         </div>
-        <button onclick="exportMonthlyExcel()" class="px-3.5 py-2 bg-pink-500 hover:bg-pink-600 text-white text-xs font-bold rounded-xl shadow-xs transition flex items-center gap-1.5">
+        <button onclick="exportMonthlyExcel()" class="px-3.5 py-2 bg-blue-500 hover:bg-blue-600 text-white text-xs font-bold rounded-xl shadow-xs transition flex items-center gap-1.5">
           <i class="fa-solid fa-file-arrow-down"></i> 이번 달 내역 다운로드
         </button>
       </div>
       <div class="overflow-x-auto custom-scrollbar">
         <table class="w-full text-left text-xs">
-          <thead class="bg-pink-50/60 text-slate-600 font-semibold border-y border-pink-100">
+          <thead class="bg-blue-50/60 text-slate-600 font-semibold border-y border-blue-100">
             <tr>
               <th class="py-3 px-3 whitespace-nowrap">업로드 일자</th>
               <th class="py-3 px-3">구분</th>
@@ -744,9 +745,9 @@
     <!-- 신규 PPL 등록은 목록 위 "인플루언서 추가" 버튼에서 모달로 엽니다 (아래 pplFormModal) -->
     <div id="pplFormModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs items-center justify-center z-50 hidden p-4">
      <div class="bg-white rounded-3xl w-full max-w-5xl max-h-[92vh] overflow-y-auto custom-scrollbar shadow-2xl">
-      <div class="sticky top-0 bg-white px-6 py-4 border-b border-pink-100 flex items-center justify-between z-10">
+      <div class="sticky top-0 bg-white px-6 py-4 border-b border-blue-100 flex items-center justify-between z-10">
         <h2 class="text-base font-bold text-slate-800 flex items-center gap-2">
-          <i class="fa-solid fa-user-plus text-pink-500"></i> 신규 인플루언서 · PPL 진행 등록
+          <i class="fa-solid fa-user-plus text-blue-500"></i> 신규 인플루언서 · PPL 진행 등록
         </h2>
         <button type="button" onclick="closePplFormModal()" class="text-slate-400 hover:text-slate-700 p-2"><i class="fa-solid fa-xmark text-lg"></i></button>
       </div>
@@ -754,7 +755,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           <div>
             <label class="block text-[11px] font-semibold text-slate-600 mb-1">브랜드</label>
-            <select id="formBrand" onchange="updateProductSelect()" class="w-full px-3 py-2 text-xs border border-pink-200 rounded-xl focus:ring-2 focus:ring-pink-400 font-bold text-pink-600 bg-pink-50/30">
+            <select id="formBrand" onchange="updateProductSelect()" class="w-full px-3 py-2 text-xs border border-blue-200 rounded-xl focus:ring-2 focus:ring-blue-400 font-bold text-blue-600 bg-blue-50/30">
               <option value="온살">온살</option>
               <option value="루메아카이브">루메아카이브</option>
             </select>
@@ -773,19 +774,19 @@
           </div>
           <div>
             <label class="block text-[11px] font-semibold text-slate-600 mb-1">카테고리 (선택 또는 직접 입력)</label>
-            <input type="text" id="formCategory" list="categoryList" placeholder="예: 뷰티" class="w-full px-3 py-2 text-xs border border-pink-200 rounded-xl bg-pink-50/30 font-semibold text-pink-700">
+            <input type="text" id="formCategory" list="categoryList" placeholder="예: 뷰티" class="w-full px-3 py-2 text-xs border border-blue-200 rounded-xl bg-blue-50/30 font-semibold text-blue-700">
             <p class="text-[10px] text-slate-400 mt-1">새 카테고리를 적으면 다음부터 목록에 저장됩니다.</p>
           </div>
         </div>
         <datalist id="categoryList"></datalist>
 
         <!-- 복수 SNS 채널 및 URL 관리 영역 -->
-        <div class="bg-pink-50/40 p-3.5 rounded-xl border border-pink-100 space-y-3">
+        <div class="bg-blue-50/40 p-3.5 rounded-xl border border-blue-100 space-y-3">
           <div class="flex justify-between items-center">
-            <label class="block text-[11px] font-bold text-pink-800 flex items-center gap-1.5">
-              <i class="fa-solid fa-share-nodes text-pink-500"></i> SNS 채널 및 프로필 URL (복수 채널 지원)
+            <label class="block text-[11px] font-bold text-blue-800 flex items-center gap-1.5">
+              <i class="fa-solid fa-share-nodes text-blue-500"></i> SNS 채널 및 프로필 URL (복수 채널 지원)
             </label>
-            <button type="button" onclick="addFormChannelRow()" class="px-2.5 py-1 bg-pink-500 text-white text-[11px] font-bold rounded-lg shadow-xs hover:bg-pink-600 transition">
+            <button type="button" onclick="addFormChannelRow()" class="px-2.5 py-1 bg-blue-500 text-white text-[11px] font-bold rounded-lg shadow-xs hover:bg-blue-600 transition">
               <i class="fa-solid fa-plus"></i> 채널 추가
             </button>
           </div>
@@ -831,31 +832,31 @@
           <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 text-xs">
             <div class="bg-white p-2.5 rounded-xl border border-amber-200/60 space-y-1.5">
               <label class="flex items-center gap-1.5 font-bold text-slate-700 cursor-pointer">
-                <input type="checkbox" id="type_branded" class="w-4 h-4 text-pink-500 accent-pink-500 rounded"> 브랜디드
+                <input type="checkbox" id="type_branded" class="w-4 h-4 text-blue-500 accent-blue-500 rounded"> 브랜디드
               </label>
               <input type="number" id="cost_branded" placeholder="단가 (원)" class="w-full px-2 py-1 text-xs border border-slate-200 rounded-lg">
             </div>
             <div class="bg-white p-2.5 rounded-xl border border-amber-200/60 space-y-1.5">
               <label class="flex items-center gap-1.5 font-bold text-slate-700 cursor-pointer">
-                <input type="checkbox" id="type_ppl" class="w-4 h-4 text-pink-500 accent-pink-500 rounded"> PPL
+                <input type="checkbox" id="type_ppl" class="w-4 h-4 text-blue-500 accent-blue-500 rounded"> PPL
               </label>
               <input type="number" id="cost_ppl" placeholder="단가 (원)" class="w-full px-2 py-1 text-xs border border-slate-200 rounded-lg">
             </div>
             <div class="bg-white p-2.5 rounded-xl border border-amber-200/60 space-y-1.5">
               <label class="flex items-center gap-1.5 font-bold text-slate-700 cursor-pointer">
-                <input type="checkbox" id="type_reuse" class="w-4 h-4 text-pink-500 accent-pink-500 rounded"> 2차활용
+                <input type="checkbox" id="type_reuse" class="w-4 h-4 text-blue-500 accent-blue-500 rounded"> 2차활용
               </label>
               <input type="number" id="cost_reuse" placeholder="단가 (원)" class="w-full px-2 py-1 text-xs border border-slate-200 rounded-lg">
             </div>
             <div class="bg-white p-2.5 rounded-xl border border-amber-200/60 space-y-1.5">
               <label class="flex items-center gap-1.5 font-bold text-slate-700 cursor-pointer">
-                <input type="checkbox" id="type_reels" class="w-4 h-4 text-pink-500 accent-pink-500 rounded"> 릴스
+                <input type="checkbox" id="type_reels" class="w-4 h-4 text-blue-500 accent-blue-500 rounded"> 릴스
               </label>
               <input type="number" id="cost_reels" placeholder="단가 (원)" class="w-full px-2 py-1 text-xs border border-slate-200 rounded-lg">
             </div>
             <div class="bg-white p-2.5 rounded-xl border border-amber-200/60 space-y-1.5">
               <label class="flex items-center gap-1.5 font-bold text-slate-700 cursor-pointer">
-                <input type="checkbox" id="type_shorts" class="w-4 h-4 text-pink-500 accent-pink-500 rounded"> 숏츠
+                <input type="checkbox" id="type_shorts" class="w-4 h-4 text-blue-500 accent-blue-500 rounded"> 숏츠
               </label>
               <input type="number" id="cost_shorts" placeholder="단가 (원)" class="w-full px-2 py-1 text-xs border border-slate-200 rounded-lg">
             </div>
@@ -902,23 +903,23 @@
         </div>
 
         <!-- 컨택 일자 및 단계별 일정 -->
-        <div class="bg-pink-50/50 p-3.5 rounded-xl border border-pink-200 space-y-3">
+        <div class="bg-blue-50/50 p-3.5 rounded-xl border border-blue-200 space-y-3">
           <div class="flex justify-between items-center">
-            <label class="block text-[11px] font-bold text-pink-800 flex items-center gap-1">
-              <i class="fa-solid fa-clock-rotate-left text-pink-500"></i> 컨택 일자 및 이후 단계별 일정
+            <label class="block text-[11px] font-bold text-blue-800 flex items-center gap-1">
+              <i class="fa-solid fa-clock-rotate-left text-blue-500"></i> 컨택 일자 및 이후 단계별 일정
             </label>
-            <button type="button" onclick="addRegistrationStepRow()" class="px-2.5 py-1 bg-pink-500 text-white text-[11px] font-bold rounded-lg shadow-xs hover:bg-pink-600 transition">
+            <button type="button" onclick="addRegistrationStepRow()" class="px-2.5 py-1 bg-blue-500 text-white text-[11px] font-bold rounded-lg shadow-xs hover:bg-blue-600 transition">
               <i class="fa-solid fa-plus"></i> 일정 추가
             </button>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 items-end">
             <div>
               <label class="block text-[11px] font-semibold text-slate-600 mb-1">컨택 일자</label>
-              <input type="date" id="contactDate" required class="w-full px-3 py-2 text-xs border border-pink-200 rounded-xl bg-white font-bold text-slate-800">
+              <input type="date" id="contactDate" required class="w-full px-3 py-2 text-xs border border-blue-200 rounded-xl bg-white font-bold text-slate-800">
             </div>
             <p class="text-[11px] text-slate-500 pb-2">등록하면 컨택중 단계로 시작합니다. 이후 단계는 아래 일정 추가로 넣거나, 진행 목록 테이블에서 바꿀 수 있어요.</p>
           </div>
-          <div id="registrationStepContainer" class="space-y-2 pt-2 border-t border-pink-100"></div>
+          <div id="registrationStepContainer" class="space-y-2 pt-2 border-t border-blue-100"></div>
         </div>
 
         <!-- MCN 정보 & 시딩 수량 -->
@@ -935,15 +936,15 @@
             </div>
           </div>
 
-          <div class="bg-pink-50/40 p-3 rounded-xl border border-pink-100 space-y-2">
-            <span class="text-[11px] font-bold text-pink-700 uppercase tracking-wider flex items-center gap-1">
-              <i class="fa-solid fa-gift text-pink-500"></i> 시딩 샘플 발송 수량 및 배송지
+          <div class="bg-blue-50/40 p-3 rounded-xl border border-blue-100 space-y-2">
+            <span class="text-[11px] font-bold text-blue-700 uppercase tracking-wider flex items-center gap-1">
+              <i class="fa-solid fa-gift text-blue-500"></i> 시딩 샘플 발송 수량 및 배송지
               <span class="text-[10px] font-semibold text-slate-400 normal-case tracking-normal">· 선택 항목 (나중에 수정 창에서 넣어도 돼요)</span>
             </span>
             <div class="grid grid-cols-2 gap-2">
               <div>
                 <label class="block text-[10px] font-semibold text-slate-600 mb-0.5">발송 수량 (개)</label>
-                <input type="number" id="seedingCount" value="1" min="0" class="w-full px-2.5 py-1.5 text-xs border border-pink-200 rounded-xl font-bold text-pink-600 bg-white">
+                <input type="number" id="seedingCount" value="1" min="0" class="w-full px-2.5 py-1.5 text-xs border border-blue-200 rounded-xl font-bold text-blue-600 bg-white">
               </div>
               <div>
                 <label class="block text-[10px] font-semibold text-slate-600 mb-0.5">수령인 성함 / 연락처</label>
@@ -956,7 +957,7 @@
             <div>
               <label class="block text-[10px] font-semibold text-slate-600 mb-0.5">배송지 주소 (입력 시 우편번호 자동 기재)</label>
               <div class="flex gap-2">
-                <input type="text" id="postalCode" readonly placeholder="우편번호" class="w-20 px-2 py-1.5 text-xs border border-pink-200 rounded-xl bg-pink-50 font-bold text-pink-700 text-center">
+                <input type="text" id="postalCode" readonly placeholder="우편번호" class="w-20 px-2 py-1.5 text-xs border border-blue-200 rounded-xl bg-blue-50 font-bold text-blue-700 text-center">
                 <button type="button" onclick="searchAddress('postalCode','address')" class="px-2.5 py-1.5 bg-slate-700 hover:bg-slate-800 text-white text-[11px] font-bold rounded-xl whitespace-nowrap">
                   <i class="fa-solid fa-magnifying-glass"></i> 주소 검색
                 </button>
@@ -978,7 +979,7 @@
           </div>
         </div>
 
-        <button type="submit" class="w-full py-3 bg-pink-500 hover:bg-pink-600 text-white font-bold text-xs rounded-xl transition shadow-md shadow-pink-200">
+        <button type="submit" class="w-full py-3 bg-blue-500 hover:bg-blue-600 text-white font-bold text-xs rounded-xl transition shadow-md shadow-blue-200">
           신규 PPL 진행등록하기
         </button>
       </form>
@@ -986,21 +987,21 @@
     </div>
 
     <!-- SECTION 3: PPL 진행 목록 테이블 -->
-    <section class="bg-white p-5 rounded-2xl border border-pink-100 shadow-sm space-y-4">
+    <section class="bg-white p-5 rounded-2xl border border-blue-100 shadow-sm space-y-4">
       <div class="flex flex-wrap gap-3 justify-between items-center">
         <div>
           <h2 class="text-base font-bold text-slate-800 flex items-center gap-2">
-            <i class="fa-solid fa-list text-pink-500"></i> 브랜디드 &amp; PPL 진행 목록 테이블
+            <i class="fa-solid fa-list text-blue-500"></i> 브랜디드 &amp; PPL 진행 목록 테이블
           </h2>
           <p class="text-xs text-slate-500">체크한 인플루언서의 수령인 이름·연락처·우편번호·주소를 엑셀로 받을 수 있어요. (체크 없으면 현재 목록 전체)</p>
-          <p class="text-xs text-pink-600 font-semibold mt-0.5"><i class="fa-solid fa-lightbulb"></i> 인플루언서 <b>이름을 클릭</b>하면 수정 창이 바로 열려요. 목록은 <b>진행중 → 진행예정 → 진행완료</b> 순으로 묶여 있어요. <b>단계별 일자 관리에서 '업로드'에 완료 체크</b>를 해야 진행완료로 내려갑니다.</p>
+          <p class="text-xs text-blue-600 font-semibold mt-0.5"><i class="fa-solid fa-lightbulb"></i> 인플루언서 <b>이름을 클릭</b>하면 수정 창이 바로 열려요. 목록은 <b>진행중 → 진행예정 → 진행완료</b> 순으로 묶여 있어요. <b>단계별 일자 관리에서 '업로드'에 완료 체크</b>를 해야 진행완료로 내려갑니다.</p>
         </div>
 
         <div class="flex flex-wrap items-center gap-2">
         <button onclick="openPplFormModal()" class="px-3.5 py-2 bg-slate-900 hover:bg-slate-700 text-white text-xs font-bold rounded-xl shadow-xs transition flex items-center gap-1.5">
           <i class="fa-solid fa-user-plus"></i> 인플루언서 추가
         </button>
-        <button onclick="openProductListModal()" class="px-3.5 py-2 bg-white hover:bg-pink-50 text-pink-600 border border-pink-200 text-xs font-bold rounded-xl transition flex items-center gap-1.5">
+        <button onclick="openProductListModal()" class="px-3.5 py-2 bg-white hover:bg-blue-50 text-blue-600 border border-blue-200 text-xs font-bold rounded-xl transition flex items-center gap-1.5">
           <i class="fa-solid fa-boxes-packing"></i> 제품 관리
         </button>
         <button onclick="exportShippingExcel()" class="px-3.5 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold rounded-xl shadow-xs transition flex items-center gap-1.5">
@@ -1016,10 +1017,10 @@
 
       <div class="overflow-x-auto custom-scrollbar">
         <table data-cols="wide" class="w-full text-left text-xs">
-          <thead class="bg-pink-50/50 text-slate-600 font-semibold border-y border-pink-100">
+          <thead class="bg-blue-50/50 text-slate-600 font-semibold border-y border-blue-100">
             <tr>
               <th class="py-3 px-3 w-8">
-                <input type="checkbox" id="pplSelectAll" onchange="toggleSelectAllPpl(this.checked)" class="accent-pink-500 w-4 h-4 cursor-pointer" title="전체 선택">
+                <input type="checkbox" id="pplSelectAll" onchange="toggleSelectAllPpl(this.checked)" class="accent-blue-500 w-4 h-4 cursor-pointer" title="전체 선택">
               </th>
               <th class="py-3 px-3">브랜드/제품</th>
               <th class="py-3 px-3">인플루언서 본명 / 채널들</th>
@@ -1039,23 +1040,23 @@
     </section>
 
     <!-- SECTION 4: 월간 진행 달력 -->
-    <section class="bg-white p-5 rounded-2xl border border-pink-100 shadow-sm space-y-4">
+    <section class="bg-white p-5 rounded-2xl border border-blue-100 shadow-sm space-y-4">
       <div class="flex justify-between items-center">
         <div class="flex items-center gap-3">
           <h2 class="text-base font-bold text-slate-800 flex items-center gap-2">
-            <i class="fa-solid fa-calendar-days text-pink-500"></i> 월간 진행 일정표
+            <i class="fa-solid fa-calendar-days text-blue-500"></i> 월간 진행 일정표
           </h2>
-          <span id="calendarTitle" class="text-base font-black text-pink-600"></span>
+          <span id="calendarTitle" class="text-base font-black text-blue-600"></span>
         </div>
         <div class="flex items-center gap-1">
-          <button onclick="moveMonth(-1)" class="p-2 hover:bg-pink-50 rounded-xl text-slate-600 text-xs"><i class="fa-solid fa-chevron-left"></i></button>
-          <button onclick="moveMonth(0)" class="px-3 py-1.5 text-xs font-semibold border border-pink-200 rounded-xl hover:bg-pink-50 text-pink-700">오늘</button>
-          <button onclick="moveMonth(1)" class="p-2 hover:bg-pink-50 rounded-xl text-slate-600 text-xs"><i class="fa-solid fa-chevron-right"></i></button>
+          <button onclick="moveMonth(-1)" class="p-2 hover:bg-blue-50 rounded-xl text-slate-600 text-xs"><i class="fa-solid fa-chevron-left"></i></button>
+          <button onclick="moveMonth(0)" class="px-3 py-1.5 text-xs font-semibold border border-blue-200 rounded-xl hover:bg-blue-50 text-blue-700">오늘</button>
+          <button onclick="moveMonth(1)" class="p-2 hover:bg-blue-50 rounded-xl text-slate-600 text-xs"><i class="fa-solid fa-chevron-right"></i></button>
         </div>
       </div>
 
       <div class="flex flex-wrap gap-4 text-xs font-medium text-slate-500">
-        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-pink-500"></span> 온살 예정</span>
+        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span> 온살 예정</span>
         <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-skyblue-500"></span> 루메아카이브 예정</span>
         <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> ✅ 진행 완료건</span>
         <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span> 📌 개별 단계일정</span>
@@ -1063,39 +1064,39 @@
         <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> 공휴일 · 일요일 (빨간날)</span>
       </div>
 
-      <div class="border border-pink-100 rounded-2xl overflow-hidden shadow-xs">
-        <div class="grid grid-cols-7 text-center bg-pink-50/60 border-b border-pink-100 text-[11px] font-bold text-slate-600 py-2.5">
+      <div class="border border-blue-100 rounded-2xl overflow-hidden shadow-xs">
+        <div class="grid grid-cols-7 text-center bg-blue-50/60 border-b border-blue-100 text-[11px] font-bold text-slate-600 py-2.5">
           <div class="text-rose-500">일</div>
           <div>월</div>
           <div>화</div>
           <div>수</div>
           <div>목</div>
           <div>금</div>
-          <div class="text-pink-600">토</div>
+          <div class="text-blue-600">토</div>
         </div>
-        <div id="calendarGrid" class="grid grid-cols-7 auto-rows-fr divide-x divide-y divide-pink-50 bg-white min-h-[500px]">
+        <div id="calendarGrid" class="grid grid-cols-7 auto-rows-fr divide-x divide-y divide-blue-50 bg-white min-h-[500px]">
           <!-- JS 로딩 -->
         </div>
       </div>
     </section>
 
     <!-- 업로드 일자 & 링크 표 -->
-    <section class="bg-white p-5 rounded-2xl border border-pink-200 shadow-sm space-y-4">
-      <div class="flex flex-wrap gap-3 justify-between items-center border-b border-pink-100 pb-3">
+    <section class="bg-white p-5 rounded-2xl border border-blue-200 shadow-sm space-y-4">
+      <div class="flex flex-wrap gap-3 justify-between items-center border-b border-blue-100 pb-3">
         <div>
           <h2 class="text-base font-bold text-slate-800 flex items-center gap-2">
-            <i class="fa-solid fa-arrow-up-right-from-square text-pink-600"></i> PPL 업로드 일자 & 링크
+            <i class="fa-solid fa-arrow-up-right-from-square text-blue-600"></i> PPL 업로드 일자 & 링크
             <span id="pplUploadBodyCount" class="text-xs font-bold px-2 py-0.5 bg-pink-100 text-pink-700 rounded-full">0건</span>
           </h2>
           <p class="text-xs text-slate-500">업로드한 날짜와 링크만 모아서 봅니다. 목록의 “업로드/결과 입력”에서 기록하면 자동으로 쌓여요.</p>
         </div>
-        <button onclick="exportUploadExcel('ppl')" class="px-3.5 py-2 bg-pink-600 hover:bg-pink-700 text-white text-xs font-bold rounded-xl shadow-xs transition flex items-center gap-1.5">
+        <button onclick="exportUploadExcel('ppl')" class="px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-xs transition flex items-center gap-1.5">
           <i class="fa-solid fa-file-arrow-down"></i> 업로드 내역 다운로드
         </button>
       </div>
       <div class="overflow-x-auto custom-scrollbar">
         <table class="w-full text-left text-xs">
-          <thead class="bg-pink-50/60 text-slate-600 font-semibold border-y border-pink-100">
+          <thead class="bg-blue-50/60 text-slate-600 font-semibold border-y border-blue-100">
             <tr>
               <th class="py-3 px-3 whitespace-nowrap">업로드 일자</th>
               <th class="py-3 px-3">인플루언서</th>
@@ -1182,8 +1183,8 @@
 
       <!-- 브랜드별 건수 집계 -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
-        <div class="bg-pink-50/50 p-4 rounded-xl border border-pink-100 space-y-2">
-          <span class="text-xs font-bold text-pink-700">온살</span>
+        <div class="bg-blue-50/50 p-4 rounded-xl border border-blue-100 space-y-2">
+          <span class="text-xs font-bold text-blue-700">온살</span>
           <div class="grid grid-cols-3 gap-2 text-center">
             <div>
               <div class="text-[11px] text-slate-500 font-semibold">마이크로 릴스</div>
@@ -1193,9 +1194,9 @@
               <div class="text-[11px] text-slate-500 font-semibold">마이크로 PPL</div>
               <div id="microOnsalPpl" class="text-xl font-black text-cyan-600">0건</div>
             </div>
-            <div class="border-l border-pink-200">
+            <div class="border-l border-blue-200">
               <div class="text-[11px] text-slate-500 font-semibold">합계</div>
-              <div id="microOnsalTotal" class="text-xl font-black text-pink-600">0건</div>
+              <div id="microOnsalTotal" class="text-xl font-black text-blue-600">0건</div>
             </div>
           </div>
         </div>
@@ -1529,9 +1530,9 @@
           <span class="text-[11px] text-slate-500 font-semibold">전체</span>
           <div id="ambTotal" class="text-2xl font-black text-indigo-700 mt-0.5">0명</div>
         </div>
-        <div class="bg-pink-50/60 p-4 rounded-xl border border-pink-100">
+        <div class="bg-blue-50/60 p-4 rounded-xl border border-blue-100">
           <span class="text-[11px] text-slate-500 font-semibold">온살</span>
-          <div id="ambOnsal" class="text-2xl font-black text-pink-600 mt-0.5">0명</div>
+          <div id="ambOnsal" class="text-2xl font-black text-blue-600 mt-0.5">0명</div>
         </div>
         <div class="bg-skyblue-50/60 p-4 rounded-xl border border-skyblue-100">
           <span class="text-[11px] text-slate-500 font-semibold">루메아카이브</span>
@@ -1597,9 +1598,9 @@
           <span class="text-[11px] text-slate-500 font-semibold">전체 무상앰버서더</span>
           <div id="freeAmbTotal" class="text-2xl font-black text-teal-700 mt-0.5">0명</div>
         </div>
-        <div class="bg-pink-50/60 p-4 rounded-xl border border-pink-100">
+        <div class="bg-blue-50/60 p-4 rounded-xl border border-blue-100">
           <span class="text-[11px] text-slate-500 font-semibold">온살</span>
-          <div id="freeAmbOnsal" class="text-2xl font-black text-pink-600 mt-0.5">0명</div>
+          <div id="freeAmbOnsal" class="text-2xl font-black text-blue-600 mt-0.5">0명</div>
         </div>
         <div class="bg-skyblue-50/60 p-4 rounded-xl border border-skyblue-100">
           <span class="text-[11px] text-slate-500 font-semibold">루메아카이브</span>
@@ -1766,9 +1767,9 @@
           <span class="text-[11px] text-slate-500 font-semibold">전체</span>
           <div id="supTotal" class="text-2xl font-black text-cyan-700 mt-0.5">0명</div>
         </div>
-        <div class="bg-pink-50/60 p-4 rounded-xl border border-pink-100">
+        <div class="bg-blue-50/60 p-4 rounded-xl border border-blue-100">
           <span class="text-[11px] text-slate-500 font-semibold">온살</span>
-          <div id="supOnsal" class="text-2xl font-black text-pink-600 mt-0.5">0명</div>
+          <div id="supOnsal" class="text-2xl font-black text-blue-600 mt-0.5">0명</div>
         </div>
         <div class="bg-skyblue-50/60 p-4 rounded-xl border border-skyblue-100">
           <span class="text-[11px] text-slate-500 font-semibold">루메아카이브</span>
@@ -2416,11 +2417,11 @@
     <div class="grid grid-cols-2 md:grid-cols-4 gap-3" id="trialSummary"></div>
 
     <!-- 체험단 등록 -->
-    <section class="bg-white rounded-3xl border border-pink-100 shadow-sm overflow-hidden">
+    <section class="bg-white rounded-3xl border border-blue-100 shadow-sm overflow-hidden">
       <div class="px-6 py-4 flex items-center justify-between cursor-pointer select-none" onclick="toggleSection('trialFormSection')">
         <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
-          <i id="trialFormSection-icon" class="fa-solid fa-chevron-right text-pink-400 text-xs transition-transform"></i>
-          <i class="fa-solid fa-users-rectangle text-pink-500"></i> 체험단 등록
+          <i id="trialFormSection-icon" class="fa-solid fa-chevron-right text-blue-400 text-xs transition-transform"></i>
+          <i class="fa-solid fa-users-rectangle text-blue-500"></i> 체험단 등록
         </h2>
         <span class="text-xs text-slate-400">클릭해서 열기 · 항목 관리도 이 안에 있어요</span>
       </div>
@@ -2432,18 +2433,18 @@
           <div class="px-4 py-2.5 bg-slate-50 flex items-center justify-between cursor-pointer select-none" onclick="toggleSection('trialOptionSection')">
             <p class="text-xs font-bold text-slate-700 flex items-center gap-2">
               <i id="trialOptionSection-icon" class="fa-solid fa-chevron-right text-slate-400 text-[10px] transition-transform"></i>
-              <i class="fa-solid fa-tags text-pink-500"></i> 항목 관리
+              <i class="fa-solid fa-tags text-blue-500"></i> 항목 관리
             </p>
             <span class="text-[11px] text-slate-400">체험단 · SNS · 유형 · 일정 단계 선택지 추가/삭제</span>
           </div>
           <div id="trialOptionSection" class="hidden p-4 space-y-4 bg-white">
             <div class="grid md:grid-cols-3 gap-3">
-              <div class="bg-pink-50/50 border border-pink-100 rounded-xl p-3">
-                <p class="text-[11px] font-bold text-pink-600 mb-2">체험단 <span class="font-normal text-pink-300">(레뷰 / 글로우픽 …)</span></p>
+              <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-3">
+                <p class="text-[11px] font-bold text-blue-600 mb-2">체험단 <span class="font-normal text-blue-300">(레뷰 / 글로우픽 …)</span></p>
                 <div id="trialPlatformChips" class="flex flex-wrap gap-1.5 mb-2"></div>
                 <div class="flex gap-1.5">
-                  <input id="newTrialPlatform" onkeydown="if(event.key==='Enter')addTrialOption('platform')" placeholder="추가" class="flex-1 px-2.5 py-1.5 border border-pink-200 rounded-lg text-xs bg-white outline-none">
-                  <button type="button" onclick="addTrialOption('platform')" class="px-3 py-1.5 bg-pink-500 text-white text-xs font-bold rounded-lg">추가</button>
+                  <input id="newTrialPlatform" onkeydown="if(event.key==='Enter')addTrialOption('platform')" placeholder="추가" class="flex-1 px-2.5 py-1.5 border border-blue-200 rounded-lg text-xs bg-white outline-none">
+                  <button type="button" onclick="addTrialOption('platform')" class="px-3 py-1.5 bg-blue-500 text-white text-xs font-bold rounded-lg">추가</button>
                 </div>
               </div>
               <div class="bg-sky-50/50 border border-sky-100 rounded-xl p-3">
@@ -2477,13 +2478,13 @@
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
           <div>
             <label class="block text-xs font-semibold text-slate-500 mb-1">브랜드</label>
-            <select id="trialBrand" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-pink-200">
+            <select id="trialBrand" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-200">
               <option>온살</option><option>루메아카이브</option>
             </select>
           </div>
           <div>
-            <label class="block text-xs font-semibold text-slate-500 mb-1">체험단 <span class="text-pink-400 font-normal">직접입력 가능</span></label>
-            <input id="trialPlatform" list="trialPlatformList" autocomplete="off" oninput="revuToggle()" onchange="revuToggle()" placeholder="레뷰 / 직접 입력" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-pink-200">
+            <label class="block text-xs font-semibold text-slate-500 mb-1">체험단 <span class="text-blue-400 font-normal">직접입력 가능</span></label>
+            <input id="trialPlatform" list="trialPlatformList" autocomplete="off" oninput="revuToggle()" onchange="revuToggle()" placeholder="레뷰 / 직접 입력" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-200">
             <datalist id="trialPlatformList"></datalist>
           </div>
           <div>
@@ -2501,16 +2502,16 @@
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
           <div class="md:col-span-2">
             <label class="block text-xs font-semibold text-slate-500 mb-1">진행 제품</label>
-            <input id="trialProduct" list="trialProductList" placeholder="온살 하이퍼 트라넥 흔적 세럼" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-pink-200">
+            <input id="trialProduct" list="trialProductList" placeholder="온살 하이퍼 트라넥 흔적 세럼" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-200">
             <datalist id="trialProductList"></datalist>
           </div>
           <div>
             <label class="block text-xs font-semibold text-slate-500 mb-1">모집 인원</label>
-            <input id="trialHeadcount" type="number" min="1" oninput="if(document.getElementById('revuCount')){document.getElementById('revuCount').value=this.value; revuRender();}" placeholder="50" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-pink-200">
+            <input id="trialHeadcount" type="number" min="1" oninput="if(document.getElementById('revuCount')){document.getElementById('revuCount').value=this.value; revuRender();}" placeholder="50" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-200">
           </div>
           <div>
             <label class="block text-xs font-semibold text-slate-500 mb-1">모집 시작일 (오픈일)</label>
-            <input id="trialOpenDate" type="date" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-pink-200">
+            <input id="trialOpenDate" type="date" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-blue-200">
           </div>
           <div>
             <label class="block text-xs font-semibold text-emerald-700 mb-1"><i class="fa-solid fa-won-sign"></i> 진행 금액 (원)</label>
@@ -2581,11 +2582,11 @@
         <div class="bg-slate-50/70 border border-slate-100 rounded-2xl p-4 space-y-3">
           <div class="flex flex-wrap items-center justify-between gap-2">
             <p class="text-xs font-bold text-slate-600 flex items-center gap-1.5">
-              <i class="fa-regular fa-calendar text-pink-400"></i> 체험단 일정
+              <i class="fa-regular fa-calendar text-blue-400"></i> 체험단 일정
               <span class="font-normal text-slate-400">· 📅 체크한 일정은 스케줄러에 자동 반영</span>
             </p>
             <div class="flex gap-1.5">
-              <button type="button" onclick="autoFillTrialSteps()" class="px-3 py-1.5 bg-pink-500 hover:bg-pink-600 text-white text-xs font-bold rounded-lg transition">
+              <button type="button" onclick="autoFillTrialSteps()" class="px-3 py-1.5 bg-blue-500 hover:bg-blue-600 text-white text-xs font-bold rounded-lg transition">
                 <i class="fa-solid fa-wand-magic-sparkles"></i> 일정 자동생성
               </button>
               <button type="button" onclick="addTrialStepRow()" class="px-3 py-1.5 bg-white border border-slate-200 hover:bg-slate-100 text-slate-600 text-xs font-bold rounded-lg transition">
@@ -2596,7 +2597,7 @@
           <div id="trialStepContainer" class="space-y-2"></div>
         </div>
 
-        <button onclick="addTrial()" class="px-5 py-2.5 bg-pink-500 hover:bg-pink-600 text-white text-sm font-bold rounded-xl shadow-xs transition flex items-center gap-2">
+        <button onclick="addTrial()" class="px-5 py-2.5 bg-blue-500 hover:bg-blue-600 text-white text-sm font-bold rounded-xl shadow-xs transition flex items-center gap-2">
           <i class="fa-solid fa-plus"></i> 체험단 등록
         </button>
       </div>
@@ -2606,12 +2607,12 @@
     <section class="space-y-4">
       <div class="flex flex-wrap items-center justify-between gap-2">
         <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
-          <i class="fa-solid fa-list-check text-pink-500"></i> 체험단 진행 현황
+          <i class="fa-solid fa-list-check text-blue-500"></i> 체험단 진행 현황
         </h2>
         <div class="flex flex-wrap items-center gap-2">
           <div class="flex p-1 bg-slate-100 rounded-xl text-xs font-bold" id="trialBrandTabs"></div>
           <label class="flex items-center gap-1.5 text-xs text-slate-500 font-semibold">
-            <input type="checkbox" id="trialShowDone" onchange="renderTrialDashboard()" class="accent-pink-500"> 완료 포함
+            <input type="checkbox" id="trialShowDone" onchange="renderTrialDashboard()" class="accent-blue-500"> 완료 포함
           </label>
         </div>
       </div>
@@ -2763,16 +2764,16 @@
   <!-- ==================== PAGE 3: UTM 트래킹 ==================== -->
   <main data-page="1" id="page-utm" class="app-main max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-8 hidden">
 
-    <section class="bg-white p-5 rounded-2xl border border-pink-100 shadow-sm space-y-4">
-      <div class="flex flex-wrap justify-between items-center gap-3 border-b border-pink-50 pb-3">
+    <section class="bg-white p-5 rounded-2xl border border-blue-100 shadow-sm space-y-4">
+      <div class="flex flex-wrap justify-between items-center gap-3 border-b border-blue-50 pb-3">
         <div>
           <h2 class="text-base font-bold text-slate-800 flex items-center gap-2">
-            <i class="fa-solid fa-table text-pink-500"></i> UTM 트래킹 링크
+            <i class="fa-solid fa-table text-blue-500"></i> UTM 트래킹 링크
           </h2>
           <p class="text-xs text-slate-500">인플루언서별 트래킹 URL을 만들고 바로 복사해서 쓸 수 있습니다.</p>
         </div>
         <div class="flex items-center gap-2">
-          <button onclick="openUtmModal()" class="px-3.5 py-2 bg-pink-500 hover:bg-pink-600 text-white text-xs font-semibold rounded-xl shadow-xs transition flex items-center gap-1.5">
+          <button onclick="openUtmModal()" class="px-3.5 py-2 bg-blue-500 hover:bg-blue-600 text-white text-xs font-semibold rounded-xl shadow-xs transition flex items-center gap-1.5">
             <i class="fa-solid fa-plus"></i> UTM 링크 생성
           </button>
         </div>
@@ -2780,13 +2781,13 @@
 
       <!-- UTM 통계 요약 -->
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        <div class="bg-pink-50/50 p-3 rounded-xl border border-pink-100">
+        <div class="bg-blue-50/50 p-3 rounded-xl border border-blue-100">
           <span class="text-[11px] text-slate-500 font-semibold">등록된 UTM 링크</span>
-          <div id="utmStatTotal" class="text-lg font-black text-pink-600 mt-0.5">0개</div>
+          <div id="utmStatTotal" class="text-lg font-black text-blue-600 mt-0.5">0개</div>
         </div>
-        <div class="bg-pink-50/50 p-3 rounded-xl border border-pink-100">
+        <div class="bg-blue-50/50 p-3 rounded-xl border border-blue-100">
           <span class="text-[11px] text-slate-500 font-semibold">온살</span>
-          <div id="utmStatOnsal" class="text-lg font-black text-pink-600 mt-0.5">0개</div>
+          <div id="utmStatOnsal" class="text-lg font-black text-blue-600 mt-0.5">0개</div>
         </div>
         <div class="bg-skyblue-50/60 p-3 rounded-xl border border-skyblue-100">
           <span class="text-[11px] text-slate-500 font-semibold">루메아카이브</span>
@@ -2799,12 +2800,12 @@
       </div>
 
       <!-- 검색 & 필터 -->
-      <div class="flex flex-wrap gap-3 justify-between items-center bg-pink-50/40 p-3 rounded-xl border border-pink-100">
+      <div class="flex flex-wrap gap-3 justify-between items-center bg-blue-50/40 p-3 rounded-xl border border-blue-100">
         <div class="flex items-center gap-2 flex-1 min-w-[240px]">
           <i class="fa-solid fa-magnifying-glass text-slate-400"></i>
           <input type="text" id="utmSearchInput" oninput="renderUtmDashboard()" placeholder="인플루언서 이름, 캠페인명 또는 소스 검색..." class="w-full bg-transparent text-xs outline-none font-semibold text-slate-700">
         </div>
-        <select id="utmBrandFilter" onchange="renderUtmDashboard()" class="px-3 py-1.5 text-xs border border-pink-200 rounded-lg bg-white font-bold text-pink-600">
+        <select id="utmBrandFilter" onchange="renderUtmDashboard()" class="px-3 py-1.5 text-xs border border-blue-200 rounded-lg bg-white font-bold text-blue-600">
           <option value="전체">전체 브랜드</option>
           <option value="온살">온살</option>
           <option value="루메아카이브">루메아카이브</option>
@@ -2813,7 +2814,7 @@
 
       <div class="overflow-x-auto custom-scrollbar">
         <table class="w-full text-left text-xs">
-          <thead class="bg-pink-50/50 text-slate-600 font-semibold border-y border-pink-100">
+          <thead class="bg-blue-50/50 text-slate-600 font-semibold border-y border-blue-100">
             <tr>
               <th class="py-3 px-3">브랜드 / 인플루언서</th>
               <th class="py-3 px-3">캠페인 / 방식</th>
@@ -2919,15 +2920,15 @@
 
   <!-- MODAL 1: 제품 신규 등록 / 수정 -->
   <div id="productModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center z-50 hidden p-4">
-    <div class="bg-white p-6 rounded-2xl border border-pink-100 shadow-xl max-w-md w-full space-y-4">
+    <div class="bg-white p-6 rounded-2xl border border-blue-100 shadow-xl max-w-md w-full space-y-4">
       <h3 id="modalTitle" class="text-sm font-bold text-slate-900 flex items-center gap-2">
-        <i class="fa-solid fa-box text-pink-500"></i> 브랜드 제품 등록/수정
+        <i class="fa-solid fa-box text-blue-500"></i> 브랜드 제품 등록/수정
       </h3>
       <input type="hidden" id="editProdIndex">
       <div class="space-y-3">
         <div>
           <label class="block text-xs font-semibold text-slate-600 mb-1">브랜드</label>
-          <select id="modalBrand" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl font-bold text-pink-600">
+          <select id="modalBrand" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl font-bold text-blue-600">
             <option value="온살">온살</option>
             <option value="루메아카이브">루메아카이브</option>
           </select>
@@ -2952,23 +2953,23 @@
         </div>
         <div>
           <label class="block text-xs font-semibold text-slate-600 mb-1">시딩 재고 수량 (개)</label>
-          <input type="number" id="modalProdStock" value="50" min="0" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl font-bold text-pink-600">
+          <input type="number" id="modalProdStock" value="50" min="0" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl font-bold text-blue-600">
         </div>
       </div>
       <div class="flex justify-end gap-2 pt-2">
         <button onclick="closeProductModal()" class="px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 text-xs font-semibold rounded-xl">취소</button>
-        <button onclick="saveProductModal()" class="px-4 py-2 bg-pink-500 hover:bg-pink-600 text-white text-xs font-semibold rounded-xl shadow-xs">저장하기</button>
+        <button onclick="saveProductModal()" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-xs font-semibold rounded-xl shadow-xs">저장하기</button>
       </div>
     </div>
   </div>
 
   <!-- MODAL 2: PPL 전체 수정 -->
   <div id="stepDateModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center z-50 hidden p-4">
-    <div class="bg-white p-6 rounded-2xl border border-pink-100 shadow-xl max-w-3xl w-full space-y-4 max-h-[92vh] overflow-y-auto custom-scrollbar">
-      <div class="flex justify-between items-center border-b border-pink-50 pb-2 sticky top-0 bg-white z-10">
+    <div class="bg-white p-6 rounded-2xl border border-blue-100 shadow-xl max-w-3xl w-full space-y-4 max-h-[92vh] overflow-y-auto custom-scrollbar">
+      <div class="flex justify-between items-center border-b border-blue-50 pb-2 sticky top-0 bg-white z-10">
         <div>
           <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
-            <i class="fa-solid fa-pen-to-square text-pink-500"></i> PPL 진행 건 전체 수정
+            <i class="fa-solid fa-pen-to-square text-blue-500"></i> PPL 진행 건 전체 수정
           </h3>
           <p class="text-[11px] text-slate-400">등록할 때 입력한 모든 항목을 여기서 수정할 수 있습니다.</p>
         </div>
@@ -2977,12 +2978,12 @@
       <input type="hidden" id="stepModalPplId">
 
       <!-- 기본 정보 -->
-      <div class="bg-pink-50/30 p-3 rounded-xl border border-pink-100 space-y-2 text-xs">
-        <span class="text-[11px] font-bold text-pink-800"><i class="fa-solid fa-user"></i> 기본 정보</span>
+      <div class="bg-blue-50/30 p-3 rounded-xl border border-blue-100 space-y-2 text-xs">
+        <span class="text-[11px] font-bold text-blue-800"><i class="fa-solid fa-user"></i> 기본 정보</span>
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
           <div>
             <label class="block font-semibold text-slate-600 mb-1">브랜드</label>
-            <select id="editModalBrand" onchange="renderEditProductList()" class="w-full px-2.5 py-1.5 border border-slate-200 rounded-lg bg-white font-bold text-pink-600">
+            <select id="editModalBrand" onchange="renderEditProductList()" class="w-full px-2.5 py-1.5 border border-slate-200 rounded-lg bg-white font-bold text-blue-600">
               <option value="온살">온살</option>
               <option value="루메아카이브">루메아카이브</option>
             </select>
@@ -2997,7 +2998,7 @@
           </div>
           <div>
             <label class="block font-semibold text-slate-600 mb-1">카테고리</label>
-            <input type="text" id="editModalCategory" list="categoryList" class="w-full px-2.5 py-1.5 border border-pink-200 rounded-lg bg-white font-semibold text-pink-700">
+            <input type="text" id="editModalCategory" list="categoryList" class="w-full px-2.5 py-1.5 border border-blue-200 rounded-lg bg-white font-semibold text-blue-700">
           </div>
         </div>
         <div class="grid grid-cols-2 gap-2">
@@ -3031,31 +3032,31 @@
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
           <div class="bg-white p-2 rounded-lg border border-amber-200/60 space-y-1">
             <label class="flex items-center gap-1.5 font-bold text-slate-700 cursor-pointer">
-              <input type="checkbox" id="editType_branded" class="accent-pink-500 w-4 h-4"> 브랜디드
+              <input type="checkbox" id="editType_branded" class="accent-blue-500 w-4 h-4"> 브랜디드
             </label>
             <input type="number" id="editCost_branded" placeholder="단가" class="w-full px-2 py-1 border border-slate-200 rounded">
           </div>
           <div class="bg-white p-2 rounded-lg border border-amber-200/60 space-y-1">
             <label class="flex items-center gap-1.5 font-bold text-slate-700 cursor-pointer">
-              <input type="checkbox" id="editType_ppl" class="accent-pink-500 w-4 h-4"> PPL
+              <input type="checkbox" id="editType_ppl" class="accent-blue-500 w-4 h-4"> PPL
             </label>
             <input type="number" id="editCost_ppl" placeholder="단가" class="w-full px-2 py-1 border border-slate-200 rounded">
           </div>
           <div class="bg-white p-2 rounded-lg border border-amber-200/60 space-y-1">
             <label class="flex items-center gap-1.5 font-bold text-slate-700 cursor-pointer">
-              <input type="checkbox" id="editType_reuse" class="accent-pink-500 w-4 h-4"> 2차활용
+              <input type="checkbox" id="editType_reuse" class="accent-blue-500 w-4 h-4"> 2차활용
             </label>
             <input type="number" id="editCost_reuse" placeholder="단가" class="w-full px-2 py-1 border border-slate-200 rounded">
           </div>
           <div class="bg-white p-2 rounded-lg border border-amber-200/60 space-y-1">
             <label class="flex items-center gap-1.5 font-bold text-slate-700 cursor-pointer">
-              <input type="checkbox" id="editType_reels" class="accent-pink-500 w-4 h-4"> 릴스
+              <input type="checkbox" id="editType_reels" class="accent-blue-500 w-4 h-4"> 릴스
             </label>
             <input type="number" id="editCost_reels" placeholder="단가" class="w-full px-2 py-1 border border-slate-200 rounded">
           </div>
           <div class="bg-white p-2 rounded-lg border border-amber-200/60 space-y-1">
             <label class="flex items-center gap-1.5 font-bold text-slate-700 cursor-pointer">
-              <input type="checkbox" id="editType_shorts" class="accent-pink-500 w-4 h-4"> 숏츠
+              <input type="checkbox" id="editType_shorts" class="accent-blue-500 w-4 h-4"> 숏츠
             </label>
             <input type="number" id="editCost_shorts" placeholder="단가" class="w-full px-2 py-1 border border-slate-200 rounded">
           </div>
@@ -3085,7 +3086,7 @@
           </div>
           <div class="bg-white p-2 rounded-lg border border-amber-200/60 space-y-1">
             <label class="flex items-center gap-1.5 font-bold text-slate-700 cursor-pointer">
-              <input type="checkbox" id="editType_ambassador" class="accent-pink-500 w-4 h-4"> 앰버서더
+              <input type="checkbox" id="editType_ambassador" class="accent-blue-500 w-4 h-4"> 앰버서더
             </label>
             <input type="number" id="editCost_ambassador" placeholder="단가" class="w-full px-2 py-1 border border-slate-200 rounded">
           </div>
@@ -3124,7 +3125,7 @@
         <div class="grid grid-cols-3 gap-2">
           <div>
             <label class="block font-semibold text-slate-600 mb-1">발송 수량</label>
-            <input type="number" id="editModalSeedingCount" min="1" class="w-full px-2.5 py-1.5 border border-pink-200 rounded-lg font-bold text-pink-600">
+            <input type="number" id="editModalSeedingCount" min="1" class="w-full px-2.5 py-1.5 border border-blue-200 rounded-lg font-bold text-blue-600">
           </div>
           <div>
             <label class="block font-semibold text-slate-600 mb-1">수령인</label>
@@ -3136,7 +3137,7 @@
           </div>
         </div>
         <div class="flex gap-2">
-          <input type="text" id="editModalPostalCode" readonly placeholder="우편번호" class="w-20 px-2 py-1.5 border border-pink-200 rounded-lg bg-pink-50 font-bold text-pink-700 text-center">
+          <input type="text" id="editModalPostalCode" readonly placeholder="우편번호" class="w-20 px-2 py-1.5 border border-blue-200 rounded-lg bg-blue-50 font-bold text-blue-700 text-center">
           <button type="button" onclick="searchAddress('editModalPostalCode','editModalAddress')" class="px-2.5 py-1.5 bg-slate-700 hover:bg-slate-800 text-white text-[11px] font-bold rounded-lg whitespace-nowrap">
             <i class="fa-solid fa-magnifying-glass"></i> 주소 검색
           </button>
@@ -3146,9 +3147,9 @@
       </div>
 
       <!-- SNS 채널 (접기 가능) -->
-      <div class="bg-pink-50/40 rounded-xl border border-pink-100">
+      <div class="bg-blue-50/40 rounded-xl border border-blue-100">
         <button type="button" onclick="toggleEditSns()" class="w-full flex justify-between items-center p-3 text-left">
-          <span class="text-[11px] font-bold text-pink-800">
+          <span class="text-[11px] font-bold text-blue-800">
             <i id="editSnsIcon" class="fa-solid fa-chevron-right text-[10px] mr-1 transition-transform"></i>
             <i class="fa-solid fa-share-nodes"></i> SNS 채널 <span id="editSnsCount" class="text-slate-500 font-semibold"></span>
           </span>
@@ -3156,7 +3157,7 @@
         </button>
         <div id="editSnsBody" class="hidden px-3 pb-3 space-y-2">
           <div class="flex justify-end">
-            <button type="button" onclick="addEditModalChannelRow()" class="px-2.5 py-1 bg-pink-500 text-white text-[11px] font-bold rounded-lg hover:bg-pink-600">
+            <button type="button" onclick="addEditModalChannelRow()" class="px-2.5 py-1 bg-blue-500 text-white text-[11px] font-bold rounded-lg hover:bg-blue-600">
               <i class="fa-solid fa-plus"></i> 채널 추가
             </button>
           </div>
@@ -3196,17 +3197,17 @@
 
       <div class="flex justify-end gap-2 pt-3 border-t border-slate-100 sticky bottom-0 bg-white">
         <button onclick="closeStepDateModal()" class="px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 text-xs font-semibold rounded-xl">취소</button>
-        <button onclick="saveStepDates()" class="px-5 py-2 bg-pink-500 hover:bg-pink-600 text-white text-xs font-bold rounded-xl shadow-xs">수정 내용 저장</button>
+        <button onclick="saveStepDates()" class="px-5 py-2 bg-blue-500 hover:bg-blue-600 text-white text-xs font-bold rounded-xl shadow-xs">수정 내용 저장</button>
       </div>
     </div>
   </div>
 
   <!-- MODAL 3: 소개서 & MCN 등록 -->
   <div id="proposalModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center z-50 hidden p-4">
-    <div class="bg-white p-6 rounded-2xl border border-pink-100 shadow-xl max-w-xl w-full space-y-4 max-h-[90vh] overflow-y-auto custom-scrollbar">
-      <div class="flex justify-between items-center border-b border-pink-50 pb-2">
+    <div class="bg-white p-6 rounded-2xl border border-blue-100 shadow-xl max-w-xl w-full space-y-4 max-h-[90vh] overflow-y-auto custom-scrollbar">
+      <div class="flex justify-between items-center border-b border-blue-50 pb-2">
         <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
-          <i class="fa-solid fa-file-circle-plus text-pink-500"></i> 소개서 파일 및 소속 인플루언서 풀 등록
+          <i class="fa-solid fa-file-circle-plus text-blue-500"></i> 소개서 파일 및 소속 인플루언서 풀 등록
         </h3>
         <button onclick="closeProposalModal()" class="text-slate-400 hover:text-slate-600 text-sm"><i class="fa-solid fa-xmark"></i></button>
       </div>
@@ -3223,7 +3224,7 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-3 gap-3 bg-pink-50/40 p-2.5 rounded-xl border border-pink-100">
+        <div class="grid grid-cols-3 gap-3 bg-blue-50/40 p-2.5 rounded-xl border border-blue-100">
           <div>
             <label class="block text-[11px] font-semibold text-slate-600 mb-1">담당자 이름</label>
             <input type="text" id="propAgentName" placeholder="홍길동 팀장" class="w-full px-2.5 py-1.5 text-xs border border-slate-200 rounded-xl bg-white">
@@ -3238,11 +3239,11 @@
           </div>
         </div>
 
-        <div class="bg-pink-50/40 p-3 rounded-xl border border-pink-100 space-y-2">
-          <label class="block text-xs font-semibold text-pink-900 mb-1">소개서 링크 (구글 스프레드시트 / 드라이브 / 노션)</label>
+        <div class="bg-blue-50/40 p-3 rounded-xl border border-blue-100 space-y-2">
+          <label class="block text-xs font-semibold text-blue-900 mb-1">소개서 링크 (구글 스프레드시트 / 드라이브 / 노션)</label>
           <div class="flex gap-2">
-            <input type="url" id="propFileUrl" placeholder="https://docs.google.com/spreadsheets/d/..." class="flex-1 px-3 py-2 text-xs border border-pink-200 rounded-xl font-medium text-pink-600 bg-white">
-            <button type="button" onclick="importSheetToProposal()" class="px-3 py-2 bg-pink-500 hover:bg-pink-600 text-white text-xs font-bold rounded-xl whitespace-nowrap shadow-xs">
+            <input type="url" id="propFileUrl" placeholder="https://docs.google.com/spreadsheets/d/..." class="flex-1 px-3 py-2 text-xs border border-blue-200 rounded-xl font-medium text-blue-600 bg-white">
+            <button type="button" onclick="importSheetToProposal()" class="px-3 py-2 bg-blue-500 hover:bg-blue-600 text-white text-xs font-bold rounded-xl whitespace-nowrap shadow-xs">
               <i class="fa-solid fa-cloud-arrow-down"></i> 시트 불러오기
             </button>
           </div>
@@ -3274,7 +3275,7 @@
 
         <div class="flex justify-end gap-2 pt-2">
           <button type="button" onclick="closeProposalModal()" class="px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 text-xs font-semibold rounded-xl">취소</button>
-          <button type="submit" class="px-4 py-2 bg-pink-500 hover:bg-pink-600 text-white text-xs font-semibold rounded-xl shadow-xs">등록하기</button>
+          <button type="submit" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-xs font-semibold rounded-xl shadow-xs">등록하기</button>
         </div>
       </form>
     </div>
@@ -3282,9 +3283,9 @@
 
   <!-- MODAL 4: 재고 입고 / 소진 기록 -->
   <div id="stockLogModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center z-50 hidden p-4">
-    <div class="bg-white p-6 rounded-2xl border border-pink-100 shadow-xl max-w-md w-full space-y-4">
+    <div class="bg-white p-6 rounded-2xl border border-blue-100 shadow-xl max-w-md w-full space-y-4">
       <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
-        <i class="fa-solid fa-boxes-stacked text-pink-500"></i> 샘플 재고 입고 / 촬영용 소진 기록
+        <i class="fa-solid fa-boxes-stacked text-blue-500"></i> 샘플 재고 입고 / 촬영용 소진 기록
       </h3>
       <form id="stockLogForm" class="space-y-3">
         <div>
@@ -3301,7 +3302,7 @@
         </div>
         <div>
           <label class="block text-xs font-semibold text-slate-600 mb-1">브랜드</label>
-          <select id="logBrand" onchange="updateLogProductSelect()" class="w-full px-3 py-2 text-xs border border-pink-200 rounded-xl font-bold text-pink-600 bg-pink-50/30">
+          <select id="logBrand" onchange="updateLogProductSelect()" class="w-full px-3 py-2 text-xs border border-blue-200 rounded-xl font-bold text-blue-600 bg-blue-50/30">
             <option value="온살">온살</option>
             <option value="루메아카이브">루메아카이브</option>
           </select>
@@ -3310,13 +3311,13 @@
           <label class="block text-xs font-semibold text-slate-600 mb-1">대상 제품</label>
           <select id="logProductSelect" onchange="toggleNewProductInput()" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl"></select>
         </div>
-        <div id="newProductWrap" class="hidden bg-pink-50/40 p-3 rounded-xl border border-pink-100 space-y-2">
-          <label class="block text-xs font-semibold text-pink-800 mb-1">신제품명 입력 (저장하면 제품 목록에 바로 추가됩니다)</label>
-          <input type="text" id="logNewProductName" placeholder="예: 온살 하이퍼 세럼 30ml" class="w-full px-3 py-2 text-xs border border-pink-200 rounded-xl bg-white font-semibold">
+        <div id="newProductWrap" class="hidden bg-blue-50/40 p-3 rounded-xl border border-blue-100 space-y-2">
+          <label class="block text-xs font-semibold text-blue-800 mb-1">신제품명 입력 (저장하면 제품 목록에 바로 추가됩니다)</label>
+          <input type="text" id="logNewProductName" placeholder="예: 온살 하이퍼 세럼 30ml" class="w-full px-3 py-2 text-xs border border-blue-200 rounded-xl bg-white font-semibold">
         </div>
         <div>
           <label class="block text-xs font-semibold text-slate-600 mb-1">수량 (개)</label>
-          <input type="number" id="logQuantity" value="10" min="1" required class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl font-bold text-pink-600">
+          <input type="number" id="logQuantity" value="10" min="1" required class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl font-bold text-blue-600">
         </div>
         <div>
           <label class="block text-xs font-semibold text-slate-600 mb-1">날짜</label>
@@ -3328,7 +3329,7 @@
         </div>
         <div class="flex justify-end gap-2 pt-2">
           <button type="button" onclick="closeStockLogModal()" class="px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 text-xs font-semibold rounded-xl">취소</button>
-          <button type="submit" class="px-4 py-2 bg-pink-500 hover:bg-pink-600 text-white text-xs font-semibold rounded-xl shadow-xs">기록 저장</button>
+          <button type="submit" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-xs font-semibold rounded-xl shadow-xs">기록 저장</button>
         </div>
       </form>
     </div>
@@ -3336,16 +3337,16 @@
 
   <!-- MODAL 5: UTM 링크 생성 -->
   <div id="utmModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center z-50 hidden p-4">
-    <div class="bg-white p-6 rounded-2xl border border-pink-100 shadow-xl max-w-2xl w-full space-y-4 max-h-[92vh] overflow-y-auto custom-scrollbar">
+    <div class="bg-white p-6 rounded-2xl border border-blue-100 shadow-xl max-w-2xl w-full space-y-4 max-h-[92vh] overflow-y-auto custom-scrollbar">
       <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
-        <i class="fa-solid fa-link text-pink-500"></i> <span id="utmModalTitle">새 UTM 링크 생성 및 등록</span>
+        <i class="fa-solid fa-link text-blue-500"></i> <span id="utmModalTitle">새 UTM 링크 생성 및 등록</span>
       </h3>
       <input type="hidden" id="utmEditId">
       <form id="utmForm" class="space-y-3">
         <div class="grid grid-cols-2 gap-2">
           <div>
             <label class="block text-xs font-semibold text-slate-600 mb-1">브랜드</label>
-            <select id="utmModalBrand" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl font-bold text-pink-600">
+            <select id="utmModalBrand" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl font-bold text-blue-600">
               <option value="온살">온살</option>
               <option value="루메아카이브">루메아카이브</option>
             </select>
@@ -3475,7 +3476,7 @@
 
         <div class="flex justify-end gap-2 pt-2">
           <button type="button" onclick="closeUtmModal()" class="px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 text-xs font-semibold rounded-xl">취소</button>
-          <button type="submit" id="utmSubmitBtn" class="px-4 py-2 bg-pink-500 hover:bg-pink-600 text-white text-xs font-semibold rounded-xl shadow-xs">생성 및 저장</button>
+          <button type="submit" id="utmSubmitBtn" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-xs font-semibold rounded-xl shadow-xs">생성 및 저장</button>
         </div>
       </form>
     </div>
@@ -3483,10 +3484,10 @@
 
   <!-- MODAL 6: 인플루언서 카드 수정 -->
   <div id="influencerEditModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center z-50 hidden p-4">
-    <div class="bg-white p-6 rounded-2xl border border-pink-100 shadow-xl max-w-2xl w-full space-y-4 max-h-[90vh] overflow-y-auto custom-scrollbar">
-      <div class="flex justify-between items-center border-b border-pink-50 pb-2">
+    <div class="bg-white p-6 rounded-2xl border border-blue-100 shadow-xl max-w-2xl w-full space-y-4 max-h-[90vh] overflow-y-auto custom-scrollbar">
+      <div class="flex justify-between items-center border-b border-blue-50 pb-2">
         <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
-          <i class="fa-solid fa-user-pen text-pink-500"></i> 인플루언서 정보 수정
+          <i class="fa-solid fa-user-pen text-blue-500"></i> 인플루언서 정보 수정
         </h3>
         <button onclick="closeInfluencerEdit()" class="text-slate-400 hover:text-slate-600 text-sm"><i class="fa-solid fa-xmark"></i></button>
       </div>
@@ -3505,7 +3506,7 @@
         </div>
         <div>
           <label class="block font-semibold text-slate-600 mb-1">카테고리</label>
-          <input type="text" id="infEditCategory" list="categoryList" placeholder="예: 뷰티 / 브이로그 / 운동 / 여행" class="w-full px-2.5 py-1.5 border border-pink-200 rounded-lg bg-pink-50/30 font-semibold text-pink-700">
+          <input type="text" id="infEditCategory" list="categoryList" placeholder="예: 뷰티 / 브이로그 / 운동 / 여행" class="w-full px-2.5 py-1.5 border border-blue-200 rounded-lg bg-blue-50/30 font-semibold text-blue-700">
         </div>
         <div class="grid grid-cols-3 gap-2">
           <div>
@@ -3525,16 +3526,16 @@
           </div>
           <div>
             <label class="block font-semibold text-slate-600 mb-1">단가 (원)</label>
-            <input type="number" id="infEditCost" class="w-full px-2.5 py-1.5 border border-slate-200 rounded-lg font-bold text-pink-600">
+            <input type="number" id="infEditCost" class="w-full px-2.5 py-1.5 border border-slate-200 rounded-lg font-bold text-blue-600">
           </div>
         </div>
       </div>
 
       <!-- SNS 채널 -->
-      <div class="bg-pink-50/40 p-3 rounded-xl border border-pink-100 space-y-2">
+      <div class="bg-blue-50/40 p-3 rounded-xl border border-blue-100 space-y-2">
         <div class="flex justify-between items-center">
-          <span class="text-[11px] font-bold text-pink-800"><i class="fa-solid fa-share-nodes"></i> SNS 채널</span>
-          <button type="button" onclick="addInfEditChannelRow()" class="px-2.5 py-1 bg-pink-500 text-white text-[11px] font-bold rounded-lg hover:bg-pink-600">
+          <span class="text-[11px] font-bold text-blue-800"><i class="fa-solid fa-share-nodes"></i> SNS 채널</span>
+          <button type="button" onclick="addInfEditChannelRow()" class="px-2.5 py-1 bg-blue-500 text-white text-[11px] font-bold rounded-lg hover:bg-blue-600">
             <i class="fa-solid fa-plus"></i> 채널 추가
           </button>
         </div>
@@ -3563,7 +3564,7 @@
           <input type="tel" id="infEditReceiverPhone" placeholder="연락처" class="px-2.5 py-1.5 border border-slate-200 rounded-lg bg-white">
         </div>
         <div class="flex gap-2">
-          <input type="text" id="infEditPostalCode" placeholder="우편번호" class="w-28 px-2.5 py-1.5 border border-pink-200 rounded-lg bg-white font-bold text-pink-700 text-center">
+          <input type="text" id="infEditPostalCode" placeholder="우편번호" class="w-28 px-2.5 py-1.5 border border-blue-200 rounded-lg bg-white font-bold text-blue-700 text-center">
           <input type="text" id="infEditAddress" placeholder="주소" class="flex-1 px-2.5 py-1.5 border border-slate-200 rounded-lg bg-white">
         </div>
       </div>
@@ -3576,7 +3577,7 @@
 
       <div class="flex justify-end gap-2 pt-2 border-t border-slate-100">
         <button onclick="closeInfluencerEdit()" class="px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 text-xs font-semibold rounded-xl">취소</button>
-        <button onclick="saveInfluencerEdit()" class="px-4 py-2 bg-pink-500 hover:bg-pink-600 text-white text-xs font-semibold rounded-xl shadow-xs">수정 내용 저장</button>
+        <button onclick="saveInfluencerEdit()" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-xs font-semibold rounded-xl shadow-xs">수정 내용 저장</button>
       </div>
     </div>
   </div>
@@ -3626,9 +3627,9 @@
           <span class="text-[11px] text-slate-500 font-semibold">전체</span>
           <div id="creatorTotal" class="text-2xl font-black text-violet-700 mt-0.5">0명</div>
         </div>
-        <div class="bg-pink-50/60 p-4 rounded-xl border border-pink-100">
+        <div class="bg-blue-50/60 p-4 rounded-xl border border-blue-100">
           <span class="text-[11px] text-slate-500 font-semibold">온살</span>
-          <div id="creatorOnsal" class="text-2xl font-black text-pink-600 mt-0.5">0명</div>
+          <div id="creatorOnsal" class="text-2xl font-black text-blue-600 mt-0.5">0명</div>
         </div>
         <div class="bg-skyblue-50/60 p-4 rounded-xl border border-skyblue-100">
           <span class="text-[11px] text-slate-500 font-semibold">루메아카이브</span>
@@ -3699,20 +3700,20 @@
       </div>
     </section>
     <!-- SECTION 5: 인플루언서 카드 뷰 -->
-    <section class="bg-white p-5 rounded-2xl border border-pink-100 shadow-sm space-y-4">
+    <section class="bg-white p-5 rounded-2xl border border-blue-100 shadow-sm space-y-4">
       <div class="flex justify-between items-center">
         <div>
           <h2 class="text-base font-bold text-slate-800 flex items-center gap-2">
-            <i class="fa-solid fa-users-viewfinder text-pink-500"></i> 인플루언서 리스트
+            <i class="fa-solid fa-users-viewfinder text-blue-500"></i> 인플루언서 리스트
           </h2>
           <p class="text-xs text-slate-500">이름을 클릭하면 상세(채널 · 협업 콘텐츠 · 메모)가 펼쳐집니다.</p>
         </div>
       </div>
 
-      <div class="flex flex-wrap items-center gap-2 bg-pink-50/50 border border-pink-100 rounded-2xl px-3 py-2">
+      <div class="flex flex-wrap items-center gap-2 bg-blue-50/50 border border-blue-100 rounded-2xl px-3 py-2">
         <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs"></i>
         <input id="infSearch" oninput="renderInfluencerCards()" placeholder="이름 · 계정 · 카테고리 검색" class="flex-1 min-w-[180px] bg-transparent text-xs font-semibold outline-none text-slate-700">
-        <select id="infBrandFilter" onchange="renderInfluencerCards()" class="px-2.5 py-1.5 text-xs font-bold border border-pink-200 rounded-lg bg-white text-pink-600">
+        <select id="infBrandFilter" onchange="renderInfluencerCards()" class="px-2.5 py-1.5 text-xs font-bold border border-blue-200 rounded-lg bg-white text-blue-600">
           <option value="전체">전체 브랜드</option>
           <option value="온살">온살</option>
           <option value="루메아카이브">루메아카이브</option>
@@ -3726,15 +3727,15 @@
     </section>
 
     <!-- SECTION 6: 인플루언서 소개서 & 소속사(MCN) 관리 -->
-    <section class="bg-white p-5 rounded-2xl border border-pink-100 shadow-sm space-y-4">
-      <div class="flex flex-wrap justify-between items-center gap-3 border-b border-pink-50 pb-3">
+    <section class="bg-white p-5 rounded-2xl border border-blue-100 shadow-sm space-y-4">
+      <div class="flex flex-wrap justify-between items-center gap-3 border-b border-blue-50 pb-3">
         <div>
           <h2 class="text-base font-bold text-slate-800 flex items-center gap-2">
-            <i class="fa-solid fa-folder-open text-pink-500"></i> 인플루언서 & MCN 소개서
+            <i class="fa-solid fa-folder-open text-blue-500"></i> 인플루언서 & MCN 소개서
           </h2>
           <p class="text-xs text-slate-500">공개된 구글 스프레드시트 링크를 넣으면 인플루언서 명단·단가를 표로 자동 정리합니다.</p>
         </div>
-        <button onclick="openProposalModal()" class="px-3.5 py-2 bg-pink-500 hover:bg-pink-600 text-white text-xs font-semibold rounded-xl transition flex items-center gap-1.5 shadow-xs">
+        <button onclick="openProposalModal()" class="px-3.5 py-2 bg-blue-500 hover:bg-blue-600 text-white text-xs font-semibold rounded-xl transition flex items-center gap-1.5 shadow-xs">
           <i class="fa-solid fa-file-circle-plus"></i> 새 소개서 등록
         </button>
       </div>
@@ -3951,34 +3952,34 @@
     </section>
 
     <!-- ===== 제품 출시 예산 ===== -->
-    <section class="bg-white p-5 rounded-2xl border border-pink-200 shadow-sm space-y-4">
-      <div class="flex flex-wrap gap-3 justify-between items-center border-b border-pink-100 pb-3">
+    <section class="bg-white p-5 rounded-2xl border border-blue-200 shadow-sm space-y-4">
+      <div class="flex flex-wrap gap-3 justify-between items-center border-b border-blue-100 pb-3">
         <div>
           <h2 class="text-base font-bold text-slate-800 flex items-center gap-2">
-            <i class="fa-solid fa-rocket text-pink-500"></i> <span id="launchBrandLabel">제품 출시 예산</span>
+            <i class="fa-solid fa-rocket text-blue-500"></i> <span id="launchBrandLabel">제품 출시 예산</span>
             <span id="launchHeaderCount" class="text-xs font-bold px-2 py-0.5 bg-pink-100 text-pink-700 rounded-full">0건</span>
           </h2>
           <p class="text-xs text-slate-500">제품 하나 출시할 때 얼마가 드는지 미리 짜 보는 표예요. 수량 × 단가를 넣으면 소계와 총합이 자동으로 계산됩니다.</p>
         </div>
-        <button onclick="exportLaunchExcel()" class="px-3.5 py-2 bg-pink-500 hover:bg-pink-600 text-white text-xs font-bold rounded-xl shadow-xs transition flex items-center gap-1.5">
+        <button onclick="exportLaunchExcel()" class="px-3.5 py-2 bg-blue-500 hover:bg-blue-600 text-white text-xs font-bold rounded-xl shadow-xs transition flex items-center gap-1.5">
           <i class="fa-solid fa-file-arrow-down"></i> 출시 예산 다운로드
         </button>
       </div>
 
       <div id="launchSummary" class="grid grid-cols-2 md:grid-cols-2 gap-3"></div>
 
-      <div class="bg-pink-50/50 p-4 rounded-2xl border border-pink-200 space-y-3">
+      <div class="bg-blue-50/50 p-4 rounded-2xl border border-blue-200 space-y-3">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5">
           <div class="md:col-span-2">
-            <label class="block text-[11px] font-bold text-pink-800 mb-1">출시 제품 / 캠페인명</label>
-            <input id="launchName" placeholder="예) 온살 하이퍼 비피다 세럼 런칭" class="w-full px-2.5 py-2 text-xs border border-pink-200 rounded-xl">
+            <label class="block text-[11px] font-bold text-blue-800 mb-1">출시 제품 / 캠페인명</label>
+            <input id="launchName" placeholder="예) 온살 하이퍼 비피다 세럼 런칭" class="w-full px-2.5 py-2 text-xs border border-blue-200 rounded-xl">
           </div>
           <div>
-            <label class="block text-[11px] font-bold text-pink-800 mb-1">출시 예정일</label>
-            <input type="date" id="launchDate" class="w-full px-2.5 py-2 text-xs border border-pink-200 rounded-xl">
+            <label class="block text-[11px] font-bold text-blue-800 mb-1">출시 예정일</label>
+            <input type="date" id="launchDate" class="w-full px-2.5 py-2 text-xs border border-blue-200 rounded-xl">
           </div>
         </div>
-        <button onclick="addLaunchBudget()" class="w-full py-2.5 bg-pink-500 hover:bg-pink-600 text-white text-xs font-bold rounded-xl">
+        <button onclick="addLaunchBudget()" class="w-full py-2.5 bg-blue-500 hover:bg-blue-600 text-white text-xs font-bold rounded-xl">
           <i class="fa-solid fa-plus"></i> 출시 예산 표 만들기 (기본 항목이 자동으로 채워집니다)
         </button>
       </div>
@@ -3994,7 +3995,7 @@
       <div class="sticky top-0 bg-white px-6 py-4 border-b border-slate-100 flex items-center justify-between z-10">
         <div>
           <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
-            <i class="fa-solid fa-chart-simple text-pink-500"></i> 업로드 일자 · 링크 · 결과 입력
+            <i class="fa-solid fa-chart-simple text-blue-500"></i> 업로드 일자 · 링크 · 결과 입력
           </h3>
           <p class="text-xs text-slate-500 mt-0.5"><span id="uploadModalWho"></span> · <span id="uploadModalProduct"></span></p>
         </div>
@@ -4008,7 +4009,7 @@
             <button onclick="fillYoutubeStatsInModal()" class="px-3 py-1.5 bg-rose-500 hover:bg-rose-600 text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5">
               <i class="fa-brands fa-youtube"></i> 유튜브 지표 가져오기
             </button>
-            <button onclick="addUploadRow()" class="px-3 py-1.5 bg-pink-500 hover:bg-pink-600 text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5">
+            <button onclick="addUploadRow()" class="px-3 py-1.5 bg-blue-500 hover:bg-blue-600 text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5">
               <i class="fa-solid fa-plus"></i> 업로드 행 추가
             </button>
           </div>
@@ -4082,7 +4083,7 @@
 
       <div class="sticky bottom-0 bg-white px-6 py-4 border-t border-slate-100 flex justify-end gap-2">
         <button onclick="closeUploadModal()" class="px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 text-xs font-bold rounded-xl">취소</button>
-        <button onclick="saveUploads()" class="px-4 py-2 bg-pink-500 hover:bg-pink-600 text-white text-xs font-bold rounded-xl">저장하기</button>
+        <button onclick="saveUploads()" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-xs font-bold rounded-xl">저장하기</button>
       </div>
     </div>
   </div>
@@ -4214,7 +4215,7 @@
     <div class="bg-white rounded-3xl w-full max-w-2xl max-h-[92vh] overflow-y-auto custom-scrollbar shadow-2xl">
       <div class="sticky top-0 bg-white px-6 py-4 border-b border-slate-100 flex items-center justify-between z-10">
         <div>
-          <h3 class="text-base font-bold text-slate-900 flex items-center gap-2"><i class="fa-solid fa-paperclip text-pink-500"></i> 체험단 가이드라인</h3>
+          <h3 class="text-base font-bold text-slate-900 flex items-center gap-2"><i class="fa-solid fa-paperclip text-blue-500"></i> 체험단 가이드라인</h3>
           <p class="text-xs text-slate-500 mt-0.5"><span id="trialGuideWho"></span></p>
         </div>
         <button onclick="closeTrialGuideModal()" class="text-slate-400 hover:text-slate-700 p-2"><i class="fa-solid fa-xmark text-lg"></i></button>
@@ -4222,7 +4223,7 @@
       <div class="p-6 space-y-4">
         <div>
           <label class="block text-[11px] font-bold text-slate-700 mb-1">가이드라인 링크 (파우더룸 등 자체 사이트 업로드용)</label>
-          <input id="trialGuideUrl" type="url" placeholder="https://..." class="w-full px-3 py-2 text-xs border border-pink-200 rounded-xl bg-pink-50/30">
+          <input id="trialGuideUrl" type="url" placeholder="https://..." class="w-full px-3 py-2 text-xs border border-blue-200 rounded-xl bg-blue-50/30">
         </div>
 
         <div id="trialGuideDrop" class="bg-slate-50 p-4 rounded-2xl border-2 border-dashed border-slate-300 space-y-3">
@@ -4246,7 +4247,7 @@
       </div>
       <div class="sticky bottom-0 bg-white px-6 py-4 border-t border-slate-100 flex justify-end gap-2">
         <button onclick="closeTrialGuideModal()" class="px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 text-xs font-bold rounded-xl">취소</button>
-        <button onclick="saveTrialGuide()" class="px-4 py-2 bg-pink-500 hover:bg-pink-600 text-white text-xs font-bold rounded-xl">저장하기</button>
+        <button onclick="saveTrialGuide()" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-xs font-bold rounded-xl">저장하기</button>
       </div>
     </div>
   </div>
@@ -5244,7 +5245,7 @@
 
     /* ---- 렌더 ---- */
     const TRIAL_CHIP_CLASS = {
-      platform: 'px-2 py-1 bg-white border border-pink-200 text-pink-600 text-[11px] font-bold rounded-lg flex items-center gap-1',
+      platform: 'px-2 py-1 bg-white border border-blue-200 text-blue-600 text-[11px] font-bold rounded-lg flex items-center gap-1',
       sns: 'px-2 py-1 bg-white border border-sky-200 text-sky-600 text-[11px] font-bold rounded-lg flex items-center gap-1',
       type: 'px-2 py-1 bg-white border border-violet-200 text-violet-600 text-[11px] font-bold rounded-lg flex items-center gap-1',
       stage: 'px-2 py-1 bg-white border border-slate-200 text-slate-600 text-[11px] font-bold rounded-lg flex items-center gap-1'
@@ -5290,7 +5291,7 @@
 
       const tabs = document.getElementById('trialBrandTabs');
       if (tabs) tabs.innerHTML = ['전체', '온살', '루메아카이브'].map(b =>
-        `<button onclick="setTrialBrandFilter('${b}')" class="px-3 py-1.5 rounded-lg transition ${trialBrandFilter === b ? 'bg-white text-pink-600 shadow-xs' : 'text-slate-500'}">${b}</button>`).join('');
+        `<button onclick="setTrialBrandFilter('${b}')" class="px-3 py-1.5 rounded-lg transition ${trialBrandFilter === b ? 'bg-white text-blue-600 shadow-xs' : 'text-slate-500'}">${b}</button>`).join('');
 
       const showDone = document.getElementById('trialShowDone');
       const includeDone = showDone ? showDone.checked : false;
@@ -5309,7 +5310,7 @@
           if (!upcoming || d < upcoming.d) upcoming = { d: d, st: st };
         }));
         const cards = [
-          ['진행 중 체험단', running + '건', 'fa-users-rectangle', 'text-pink-400'],
+          ['진행 중 체험단', running + '건', 'fa-users-rectangle', 'text-blue-400'],
           ['총 모집 인원', people.toLocaleString() + '명', 'fa-user-group', 'text-violet-400'],
           ['체험단 채널', trialPlatforms.length + '곳', 'fa-tags', 'text-sky-400'],
           ['가장 임박한 일정', upcoming ? `D-${upcoming.d} ${upcoming.st}` : '없음', 'fa-bell', 'text-amber-400']
@@ -5362,7 +5363,7 @@
             </td>
             <td class="py-2 px-2 whitespace-nowrap">
               <input type="date" value="${i.date || ''}" onchange="updateTrialStage(${t.id},'${tArg(st)}','date',this.value)"
-                class="px-2 py-1 border border-slate-200 rounded-lg text-xs outline-none focus:ring-2 focus:ring-pink-200">
+                class="px-2 py-1 border border-slate-200 rounded-lg text-xs outline-none focus:ring-2 focus:ring-blue-200">
               <span class="text-[11px] text-slate-400 ml-1">${tWeekday(i.date)}</span>
             </td>
             <td class="py-2 px-2 text-center">${badge}</td>
@@ -5409,7 +5410,7 @@
               <div class="flex items-center gap-2">
                 <div class="text-right">
                   <p class="text-[10px] text-slate-400 font-semibold mb-0.5">진행률 ${pct}%</p>
-                  <div class="w-24 h-1.5 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-pink-400" style="width:${pct}%"></div></div>
+                  <div class="w-24 h-1.5 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-blue-400" style="width:${pct}%"></div></div>
                 </div>
                 <select onchange="updateTrialField(${t.id},'status',this.value)" class="px-2 py-1.5 border border-slate-200 rounded-lg text-xs font-bold text-slate-600 outline-none">
                   ${TRIAL_STATUSES.map(s => `<option ${t.status === s ? 'selected' : ''}>${s}</option>`).join('')}
@@ -5498,9 +5499,9 @@
 
       const gz = document.getElementById('trialGuideDrop');
       if (gz) {
-        gz.addEventListener('dragover', e => { e.preventDefault(); gz.classList.add('border-pink-400'); });
-        gz.addEventListener('dragleave', () => gz.classList.remove('border-pink-400'));
-        gz.addEventListener('drop', e => { e.preventDefault(); gz.classList.remove('border-pink-400'); addTrialGuideFiles(e.dataTransfer.files); });
+        gz.addEventListener('dragover', e => { e.preventDefault(); gz.classList.add('border-blue-400'); });
+        gz.addEventListener('dragleave', () => gz.classList.remove('border-blue-400'));
+        gz.addEventListener('drop', e => { e.preventDefault(); gz.classList.remove('border-blue-400'); addTrialGuideFiles(e.dataTransfer.files); });
       }
       const iz = document.getElementById('uploadImageZone');
       if (iz) {
@@ -5634,19 +5635,172 @@
     // 페이지 전환 (PPL / 시딩재고 / UTM)
     /* ===== 예산 전용 화면 구성 =====
        정산·예산 4개만 남기고 나머지 메뉴를 숨깁니다. 데이터 저장(push)은 이미 차단돼 있습니다. */
+    /* ==================== 보기 전용 링크 ====================
+       주소 끝에 ?view=1 을 붙이면 조회만 가능한 화면이 됩니다.
+       입력칸·수정/삭제 버튼이 모두 잠기고, 월·브랜드 필터만 쓸 수 있습니다. */
+    const VIEW_ONLY = new URLSearchParams(location.search).get('view') === '1';
+
+    /* 잠그지 않는 조작 (보기에 필요한 필터·탭) */
+    const VIEW_ALLOW_IDS = ['payCatFilter', 'payStatusFilter', 'costYear', 'costBrand',
+      'budgetMonth', 'budgetYear', 'monthlyMonth', 'syncStatus', 'sideNavToggle'];
+    const VIEW_BLOCK_TEXT = /추가|삭제|저장|수정|등록|편집|불러오기|올리기|발행|초기화|적용|반영|생성|만들기|지우기|복원|되돌리기|가져오기/;
+
+    function applyViewOnly() {
+      if (!VIEW_ONLY) return;
+      document.querySelectorAll('#page-pay, #page-cost, #page-budget').forEach(pg => {
+        pg.querySelectorAll('input, select, textarea').forEach(f => {
+          if (VIEW_ALLOW_IDS.indexOf(f.id) >= 0) return;
+          if (f.tagName === 'INPUT' && (f.type === 'checkbox' || f.type === 'radio' || f.type === 'file')) {
+            f.disabled = true;
+          } else { f.readOnly = true; f.disabled = true; }
+          f.style.background = '#f8fafc'; f.style.cursor = 'not-allowed';
+        });
+        pg.querySelectorAll('button').forEach(b => {
+          if (VIEW_ALLOW_IDS.indexOf(b.id) >= 0) return;
+          const t = (b.innerText || '').trim();
+          const on = b.getAttribute('onclick') || '';
+          if (VIEW_BLOCK_TEXT.test(t) || /delete|remove|add|save|edit|open.*Modal/i.test(on)) {
+            b.style.display = 'none';
+          }
+        });
+      });
+      document.querySelectorAll('[contenteditable]').forEach(e => e.setAttribute('contenteditable', 'false'));
+    }
+
+    function viewLinkCopy() {
+      const url = location.origin + location.pathname + '?view=1';
+      const done = () => alert('보기 전용 링크를 복사했습니다.\n\n' + url
+        + '\n\n이 링크로 열면 숫자 확인만 가능하고, 입력칸과 수정·삭제 버튼이 모두 잠깁니다.');
+      if (navigator.clipboard) navigator.clipboard.writeText(url).then(done).catch(() => prompt('복사해 주세요', url));
+      else prompt('복사해 주세요', url);
+    }
+
+    /* ==================== 최신 여부 감시 (예산 전용) ====================
+       PPL 대시보드에서 누가 값을 바꾸면, 이 화면에 알림 띠를 띄우고
+       무엇이 몇 건 달라졌는지 보여준 뒤 [불러오기]를 눌러 반영합니다. */
+    const WATCH_KEYS = [
+      ['onsal_pplList',   'PPL · 인플루언서'],
+      ['onsal_trialList', '체험단'],
+      ['onsal_creRoster', '크리에이터'],
+      ['onsal_budgets',   '월 예산'],
+      ['onsal_products',  '제품']
+    ];
+    let watchSig = null, watchTimer = null, watchBusy = false;
+
+    function sigOf(d) {
+      const o = {};
+      WATCH_KEYS.forEach(([k]) => {
+        const v = d[k];
+        const str = JSON.stringify(v || []);
+        let h = 0;
+        for (let i = 0; i < str.length; i++) { h = ((h << 5) - h + str.charCodeAt(i)) | 0; }
+        o[k] = { n: Array.isArray(v) ? v.length : 0, h: h };
+      });
+      return o;
+    }
+    function localSig() {
+      return sigOf({
+        onsal_pplList: pplList, onsal_trialList: trialList, onsal_creRoster: creRoster,
+        onsal_budgets: budgets, onsal_products: products
+      });
+    }
+
+    async function watchCheck(silent) {
+      if (watchBusy) return;
+      watchBusy = true;
+      try {
+        const res = await fetch(SYNC_URL + '?key=' + encodeURIComponent(SYNC_KEY) + '&t=' + Date.now());
+        const json = await res.json();
+        if (!json.ok) throw new Error(json.error || 'load failed');
+        const remote = sigOf(expandSyncChunks(json.data || {}));
+        const mine = watchSig || localSig();
+
+        const diffs = [];
+        WATCH_KEYS.forEach(([k, label]) => {
+          const a = mine[k] || { n: 0, h: 0 }, b = remote[k] || { n: 0, h: 0 };
+          if (a.h === b.h) return;
+          const gap = b.n - a.n;
+          diffs.push(label + (gap ? ' ' + (gap > 0 ? '+' + gap : gap) + '건' : ' 내용 변경'));
+        });
+
+        if (diffs.length) showWatchBar(diffs, json.savedAt || '');
+        else { hideWatchBar(); if (!silent) toastWatch('최신 상태입니다.'); }
+      } catch (e) {
+        if (!silent) toastWatch('확인 실패: ' + e.message);
+      } finally { watchBusy = false; }
+    }
+
+    function showWatchBar(diffs, savedAt) {
+      let bar = document.getElementById('watchBar');
+      if (!bar) {
+        bar = document.createElement('div');
+        bar.id = 'watchBar';
+        bar.style.cssText = 'position:sticky;top:0;z-index:60;margin:0 0 12px;padding:11px 15px;'
+          + 'border:1px solid #fcd34d;background:#fffbeb;border-radius:12px;display:flex;gap:12px;'
+          + 'align-items:center;flex-wrap:wrap;font-size:12.5px;color:#92400e;font-weight:700';
+        const host = document.querySelector('main') || document.body;
+        const bn = document.getElementById('budgetOnlyBanner');
+        host.insertBefore(bar, bn ? bn.nextSibling : host.firstChild);
+      }
+      const when = savedAt ? new Date(savedAt).toLocaleString('ko-KR', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '';
+      bar.innerHTML = '<span><i class="fa-solid fa-triangle-exclamation"></i> 다른 곳에서 데이터가 바뀌었습니다'
+        + (when ? ' · 마지막 저장 ' + tEsc(when) : '') + '</span>'
+        + '<span style="font-weight:600;color:#b45309">' + tEsc(diffs.join(' · ')) + '</span>'
+        + '<button onclick="watchApply()" style="margin-left:auto;border:0;background:#b45309;color:#fff;'
+        + 'padding:7px 14px;border-radius:9px;font-weight:800;font-size:12px;cursor:pointer">최신 내용 불러오기</button>';
+    }
+    function hideWatchBar() { const b = document.getElementById('watchBar'); if (b) b.remove(); }
+
+    /* 화면이 다시 그려져도 잠금이 유지되도록 */
+    (function () {
+      const orig = window.renderAll;
+      if (typeof orig === 'function') {
+        window.renderAll = function () { const r = orig.apply(this, arguments); try { applyViewOnly(); } catch (e) {} return r; };
+      }
+    })();
+
+    async function watchApply() {
+      const b = document.getElementById('watchBar');
+      if (b) b.innerHTML = '<span><i class="fa-solid fa-spinner fa-spin"></i> 불러오는 중…</span>';
+      await pullFromSheet();
+      watchSig = localSig();
+      hideWatchBar();
+      renderAll();
+      toastWatch('최신 내용을 불러왔습니다.');
+    }
+
+    function toastWatch(msg) {
+      const t = document.createElement('div');
+      t.textContent = msg;
+      t.style.cssText = 'position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:200;'
+        + 'background:#1e293b;color:#fff;padding:10px 18px;border-radius:10px;font-size:12.5px;font-weight:700';
+      document.body.appendChild(t);
+      setTimeout(() => t.remove(), 2200);
+    }
+
+    function startWatch() {
+      watchSig = localSig();
+      clearInterval(watchTimer);
+      watchTimer = setInterval(() => watchCheck(true), 60000);   // 1분마다
+      window.addEventListener('focus', () => watchCheck(true));  // 탭 돌아올 때
+      document.addEventListener('visibilitychange', () => { if (!document.hidden) watchCheck(true); });
+    }
+
     function applyBudgetOnly() {
       try {
-        document.title = '온살 · 루메아카이브 예산 현황';
-        const KEEP = ['nav-pay', 'nav-cost', 'nav-budget-온살', 'nav-budget-루메아카이브'];
-        document.querySelectorAll('.nav-item').forEach(b => {
-          if (KEEP.indexOf(b.id) < 0) b.style.display = 'none';
+        document.title = '온살 & 루메아카이브 마케팅 예산 대시보드';
+        /* 정산·예산 그룹만 남기고 나머지 그룹·하위메뉴를 통째로 제거 */
+        ['run', 'report', 'ops'].forEach(g => {
+          const btn = document.getElementById('navgrp-' + g);
+          const sub = document.getElementById('navsub-' + g);
+          if (btn) btn.remove();
+          if (sub) sub.remove();
         });
-        document.querySelectorAll('.nav-grp').forEach(g => {
-          const items = g.querySelectorAll('.nav-item');
-          let any = false;
-          items.forEach(v => { if (v.style.display !== 'none') any = true; });
-          if (items.length && !any) g.style.display = 'none';
-        });
+        /* 정산·예산은 항상 펼친 상태로 고정 */
+        const moneyBtn = document.getElementById('navgrp-money');
+        const moneySub = document.getElementById('navsub-money');
+        if (moneySub) moneySub.classList.remove('hidden');
+        if (moneyBtn) moneyBtn.onclick = null;
         const st = document.getElementById('syncStatus');
         if (st) { st.onclick = null; st.title = '읽기 전용 — 저장하지 않습니다'; }
 
@@ -5661,6 +5815,21 @@
           host.insertBefore(bn, host.firstChild);
         }
         switchMainPage('pay');
+        applyViewOnly();
+
+        if (VIEW_ONLY) {
+          const bn2 = document.getElementById('budgetOnlyBanner');
+          if (bn2) bn2.innerHTML = '<i class="fa-solid fa-lock"></i> 보기 전용 링크로 열었습니다. 숫자 확인만 가능하며 값은 바꿀 수 없습니다.';
+          ['viewLinkBtn', 'schedSyncBtn'].forEach(id => { const e = document.getElementById(id); if (e) e.style.display = 'none'; });
+          document.querySelectorAll('.side-foot button').forEach(b => {
+            const t = (b.innerText || '').trim();
+            if (/백업|CSV|스케줄러/.test(t)) b.style.display = 'none';
+          });
+        }
+
+        const st2 = document.getElementById('syncStatus');
+        if (st2) { st2.onclick = () => watchCheck(false); st2.title = '최신 여부 확인'; }
+        startWatch();
       } catch (e) { console.warn('예산 모드 구성 실패', e); }
     }
 
@@ -5749,7 +5918,7 @@
         </select>
         <input type="date" value="${new Date().toISOString().slice(0,10)}" class="px-3 py-1.5 text-xs border border-slate-200 rounded-lg reg-date-input bg-white">
         <label class="flex items-center gap-1 text-[11px] font-semibold text-slate-600 bg-white px-2 py-1 rounded-lg border border-slate-200 cursor-pointer">
-          <input type="checkbox" class="reg-stage-done accent-pink-500"> 완료 체크
+          <input type="checkbox" class="reg-stage-done accent-blue-500"> 완료 체크
         </label>
         <button type="button" onclick="this.parentElement.remove()" class="text-slate-400 hover:text-rose-600 p-1 text-xs"><i class="fa-solid fa-trash"></i></button>
       `;
@@ -5857,8 +6026,8 @@
         });
 
         preview.innerHTML = `
-          <div class="bg-white border border-pink-100 rounded-lg p-2 mt-1">
-            <b class="text-pink-700">${pendingSheetRows.length}명</b>의 데이터를 불러왔습니다.
+          <div class="bg-white border border-blue-100 rounded-lg p-2 mt-1">
+            <b class="text-blue-700">${pendingSheetRows.length}명</b>의 데이터를 불러왔습니다.
             <div class="text-slate-500 mt-1">인식된 항목: ${headers.filter(Boolean).join(' / ')}</div>
           </div>`;
 
@@ -5893,7 +6062,7 @@
       ['전체', '온살', '루메아카이브'].forEach(b => {
         const btn = document.getElementById('tab-' + b);
         if (btn) {
-          if (b === brand) btn.className = "px-3.5 py-1.5 rounded-lg bg-white text-pink-600 shadow-xs font-bold";
+          if (b === brand) btn.className = "px-3.5 py-1.5 rounded-lg bg-white text-blue-600 shadow-xs font-bold";
           else btn.className = "px-3.5 py-1.5 rounded-lg text-slate-500 hover:text-slate-800";
         }
       });
@@ -5919,19 +6088,19 @@
         const brandColorClass = p.brand === '온살' ? 'bg-pink-100 text-pink-700' : 'bg-skyblue-100 text-skyblue-700';
 
         return `
-          <div class="bg-white p-4 rounded-2xl border border-pink-100 shadow-xs space-y-3 flex flex-col justify-between">
+          <div class="bg-white p-4 rounded-2xl border border-blue-100 shadow-xs space-y-3 flex flex-col justify-between">
             <div class="space-y-1">
               <div class="flex justify-between items-center">
                 <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${brandColorClass}">${p.brand}</span>
                 <div class="flex gap-1 text-slate-400 text-xs">
-                  <button onclick="editProduct(${realIdx})" class="hover:text-pink-600 p-1"><i class="fa-solid fa-pen"></i></button>
+                  <button onclick="editProduct(${realIdx})" class="hover:text-blue-600 p-1"><i class="fa-solid fa-pen"></i></button>
                   <button onclick="deleteProduct(${realIdx})" class="hover:text-rose-600 p-1"><i class="fa-solid fa-trash"></i></button>
                 </div>
               </div>
               <h3 class="text-sm font-bold text-slate-800 mt-1">${p.name}</h3>
               <div class="flex items-center gap-3 text-xs text-slate-500 pt-1">
                 <span>정상가: <b>${(p.originalPrice||0).toLocaleString()}원</b></span>
-                <span>판매가: <b class="text-pink-600">${(p.salePrice||0).toLocaleString()}원</b></span>
+                <span>판매가: <b class="text-blue-600">${(p.salePrice||0).toLocaleString()}원</b></span>
               </div>
             </div>
 
@@ -5940,7 +6109,7 @@
               <span class="font-black ${p.brand === '온살' ? 'text-pink-600' : 'text-skyblue-600'}">${currentStock} 개</span>
             </div>
 
-            ${p.url ? `<a href="${p.url}" target="_blank" rel="noopener" class="block text-center py-1.5 bg-slate-50 hover:bg-slate-100 text-slate-600 text-[11px] font-semibold rounded-lg border border-slate-200"><i class="fa-solid fa-link text-pink-500"></i> 제품 상세 페이지 바로가기</a>` : ''}
+            ${p.url ? `<a href="${p.url}" target="_blank" rel="noopener" class="block text-center py-1.5 bg-slate-50 hover:bg-slate-100 text-slate-600 text-[11px] font-semibold rounded-lg border border-slate-200"><i class="fa-solid fa-link text-blue-500"></i> 제품 상세 페이지 바로가기</a>` : ''}
           </div>
         `;
       }).join('');
@@ -5952,8 +6121,8 @@
       const box = document.getElementById('formProductList');
       box.innerHTML = filtered.length
         ? filtered.map(p => `
-            <label class="flex items-center gap-1.5 text-[11px] cursor-pointer hover:bg-pink-50 px-1 py-0.5 rounded">
-              <input type="checkbox" class="form-product-check accent-pink-500 w-3.5 h-3.5" value="${p.name}">
+            <label class="flex items-center gap-1.5 text-[11px] cursor-pointer hover:bg-blue-50 px-1 py-0.5 rounded">
+              <input type="checkbox" class="form-product-check accent-blue-500 w-3.5 h-3.5" value="${p.name}">
               <span class="text-slate-700">${p.name}</span>
             </label>`).join('')
         : '<span class="text-[11px] text-slate-400">등록된 제품이 없습니다</span>';
@@ -6435,7 +6604,7 @@
           + '<td class="py-2.5 px-3"><span class="text-[10px] font-bold px-1.5 py-0.5 rounded ' + brandBadgeClass + '">' + p.brand + '</span> <span class="text-slate-600">' + (prodNamesOf(p).join(', ') || '-') + '</span></td>'
           + '<td class="py-2.5 px-3 text-slate-600">' + (u.channel || '-') + (u.type ? ' / ' + u.type : '') + '</td>'
           + '<td class="py-2.5 px-3 max-w-[260px]">' + (u.url
-              ? '<a href="' + tEsc(u.url) + '" target="_blank" rel="noopener" class="text-pink-600 hover:underline break-all">' + tEsc(u.url) + '</a>'
+              ? '<a href="' + tEsc(u.url) + '" target="_blank" rel="noopener" class="text-blue-600 hover:underline break-all">' + tEsc(u.url) + '</a>'
               : '<span class="text-slate-400">링크 없음</span>') + '</td>'
           + '<td class="py-2.5 px-3 text-slate-600">' + (uploadMetricCell(p, u) || '-')
           + (u.src === 'reuse' ? ' <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-orange-100 text-orange-700 whitespace-nowrap"><i class="fa-solid fa-rotate"></i> 2차활용 연동</span>' : '') + '</td>'
@@ -6718,7 +6887,7 @@
         const el = document.getElementById('mtab-' + x);
         if (!el) return;
         el.className = (x === b)
-          ? 'px-5 py-2 rounded-lg bg-white text-pink-600 shadow-xs transition flex items-center gap-1.5'
+          ? 'px-5 py-2 rounded-lg bg-white text-blue-600 shadow-xs transition flex items-center gap-1.5'
           : 'px-5 py-2 rounded-lg text-slate-500 hover:text-slate-800 transition flex items-center gap-1.5';
         el.innerHTML = '<i class="fa-solid ' + MTAB_ICON[x] + ' text-xs"></i> ' + MTAB_LABEL[x];
       });
@@ -6812,14 +6981,14 @@
           const done = sum(r => fn(r) && r.done);
           const plan = sum(r => fn(r) && !r.done);
           return '<tr class="hover:bg-slate-50/60"><td class="py-2.5 px-3"><span class="text-[10px] font-bold px-2 py-0.5 rounded-full ' + (CAT_STYLE[label] || 'bg-slate-100 text-slate-700') + '">' + label + '</span></td>'
-            + '<td class="py-2.5 px-3 text-center font-bold text-pink-600">' + on + '</td>'
+            + '<td class="py-2.5 px-3 text-center font-bold text-blue-600">' + on + '</td>'
             + '<td class="py-2.5 px-3 text-center font-bold text-skyblue-600">' + lu + '</td>'
             + '<td class="py-2.5 px-3 text-center font-black text-slate-800">' + done + '</td>'
             + '<td class="py-2.5 px-3 text-center text-slate-500 font-semibold">' + plan + '</td></tr>';
         };
         bd.innerHTML = CATS.map(c => line(c, r => r.cat === c)).join('')
           + '<tr class="bg-slate-50 font-black"><td class="py-2.5 px-3 text-slate-800">합계</td>'
-          + '<td class="py-2.5 px-3 text-center text-pink-600">' + rows.filter(r => r.brand === '온살').reduce((a, r) => a + r.count, 0) + '</td>'
+          + '<td class="py-2.5 px-3 text-center text-blue-600">' + rows.filter(r => r.brand === '온살').reduce((a, r) => a + r.count, 0) + '</td>'
           + '<td class="py-2.5 px-3 text-center text-skyblue-600">' + rows.filter(r => r.brand === '루메아카이브').reduce((a, r) => a + r.count, 0) + '</td>'
           + '<td class="py-2.5 px-3 text-center text-slate-900">' + sum(r => r.done) + '</td>'
           + '<td class="py-2.5 px-3 text-center text-slate-500">' + sum(r => !r.done) + '</td></tr>';
@@ -6832,7 +7001,7 @@
       } else {
         tb.innerHTML = rows.map(r => {
           const brandBadgeClass = r.brand === '온살' ? 'bg-pink-100 text-pink-700' : 'bg-skyblue-100 text-skyblue-700';
-          return '<tr class="hover:bg-pink-50/30 transition">'
+          return '<tr class="hover:bg-blue-50/30 transition">'
             + '<td class="py-2.5 px-3 whitespace-nowrap font-bold text-slate-800">' + (r.date || '-')
             + (r.done ? '' : ' <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-500">예정</span>') + '</td>'
             + '<td class="py-2.5 px-3"><span class="text-[10px] font-bold px-2 py-0.5 rounded-full ' + (CAT_STYLE[r.cat] || 'bg-slate-100 text-slate-700') + '">' + r.cat + '</span></td>'
@@ -6841,7 +7010,7 @@
             + '<td class="py-2.5 px-3 text-slate-600">' + (r.channel || '-') + (r.type ? ' / ' + r.type : '') + '</td>'
             + '<td class="py-2.5 px-3 text-center font-bold text-slate-800">' + r.count + '</td>'
             + '<td class="py-2.5 px-3 max-w-[220px]">' + (r.url
-                ? '<a href="' + tEsc(r.url) + '" target="_blank" rel="noopener" class="text-pink-600 hover:underline break-all">' + tEsc(r.url) + '</a>'
+                ? '<a href="' + tEsc(r.url) + '" target="_blank" rel="noopener" class="text-blue-600 hover:underline break-all">' + tEsc(r.url) + '</a>'
                 : '<span class="text-slate-400">-</span>') + '</td>'
             + '<td class="py-2.5 px-3 text-slate-600">' + (r.metric || '-') + '</td>'
             + '</tr>';
@@ -10592,9 +10761,9 @@
           + '<span class="text-[11px] text-slate-500 font-semibold">A안 · 제품비 제외 (순수 집행비)</span>'
           + '<div class="text-2xl font-black text-slate-900 mt-0.5">' + launchMan(spend) + '<span class="text-sm font-bold text-slate-400 ml-1">만원</span></div>'
           + '<div class="text-[11px] text-slate-500 font-semibold">' + launchWon(spend) + ' · ' + mine.length + '건 합계</div></div>'
-          + '<div class="bg-white p-4 rounded-2xl border-2 border-pink-300">'
+          + '<div class="bg-white p-4 rounded-2xl border-2 border-blue-300">'
           + '<span class="text-[11px] text-slate-500 font-semibold">B안 · 제품 + 택배비 포함</span>'
-          + '<div class="text-2xl font-black text-pink-600 mt-0.5">' + launchMan(total) + '<span class="text-sm font-bold text-slate-400 ml-1">만원</span></div>'
+          + '<div class="text-2xl font-black text-blue-600 mt-0.5">' + launchMan(total) + '<span class="text-sm font-bold text-slate-400 ml-1">만원</span></div>'
           + '<div class="text-[11px] text-slate-500 font-semibold">' + launchWon(total) + ' · 제품비 ' + launchWon(total - spend) + ' 포함</div></div>';
       }
 
@@ -10615,12 +10784,12 @@
             ? avail.map(o => {
                 const on = (r.opts || []).includes(o.v);
                 return '<button type="button" onclick="toggleLaunchRevuOpt(' + L.id + ', \'' + tArg(r.id) + '\', \'' + o.v + '\')" '
-                  + 'class="text-[10px] px-2 py-0.5 rounded-lg border mr-1 mb-1 ' + (on ? 'border-pink-300 bg-pink-50 text-pink-700 font-bold' : 'border-slate-200 text-slate-400 hover:border-slate-300') + '">'
+                  + 'class="text-[10px] px-2 py-0.5 rounded-lg border mr-1 mb-1 ' + (on ? 'border-blue-300 bg-blue-50 text-blue-700 font-bold' : 'border-slate-200 text-slate-400 hover:border-slate-300') + '">'
                   + tEsc(o.label) + '</button>';
               }).join('')
             : '<span class="text-[10px] text-slate-300">해당 없음</span>';
 
-          return '<tr class="hover:bg-pink-50/30 align-top">'
+          return '<tr class="hover:bg-blue-50/30 align-top">'
             + '<td class="py-1.5 px-2"><input value="' + tEsc(r.name || '') + '" onchange="updateLaunchRevu(' + L.id + ', \'' + tArg(r.id) + '\', \'name\', this.value)" class="w-full px-2 py-1.5 text-xs border border-slate-200 rounded-lg font-semibold"></td>'
             + '<td class="py-1.5 px-2"><select onchange="updateLaunchRevu(' + L.id + ', \'' + tArg(r.id) + '\', \'tier\', this.value)" class="w-full px-2 py-1.5 text-[11px] border border-slate-200 rounded-lg bg-white">'
             + REVU_TIERS.map(t => '<option value="' + t.v + '"' + (r.tier === t.v ? ' selected' : '') + '>' + tEsc(t.label) + '</option>').join('')
@@ -10638,7 +10807,7 @@
         /* --- 그 외 항목 표 --- */
         const itemRows = c.items.map((x, i) => {
           const it = x.it;
-          return '<tr class="hover:bg-pink-50/30">'
+          return '<tr class="hover:bg-blue-50/30">'
             + '<td class="py-1.5 px-2"><input value="' + tEsc(it.label || '') + '" placeholder="항목명" onchange="updateLaunchItem(' + L.id + ', ' + i + ', \'label\', this.value)" class="w-full px-2 py-1.5 text-xs border border-slate-200 rounded-lg font-semibold"></td>'
             + '<td class="py-1.5 px-2"><input type="number" min="0" value="' + (Number(it.qty) || 0) + '" onchange="updateLaunchItem(' + L.id + ', ' + i + ', \'qty\', this.value)" class="w-full px-2 py-1.5 text-xs border border-slate-200 rounded-lg text-right"></td>'
             + '<td class="py-1.5 px-2"><input type="number" min="0" value="' + (Number(it.unit) || 0) + '" onchange="updateLaunchItem(' + L.id + ', ' + i + ', \'unit\', this.value)" class="w-full px-2 py-1.5 text-xs border border-slate-200 rounded-lg text-right"></td>'
@@ -10653,20 +10822,20 @@
             + '</tr>';
         }).join('');
 
-        return '<div class="bg-white rounded-2xl border border-pink-200 overflow-hidden">'
+        return '<div class="bg-white rounded-2xl border border-blue-200 overflow-hidden">'
 
           /* 헤더 */
-          + '<div class="px-4 py-3 bg-gradient-to-r from-pink-50/70 to-white border-b border-pink-100 flex flex-wrap items-center justify-between gap-3">'
+          + '<div class="px-4 py-3 bg-gradient-to-r from-blue-50/70 to-white border-b border-blue-100 flex flex-wrap items-center justify-between gap-3">'
           + '<div class="min-w-0">'
           + '<span class="text-[10px] font-bold px-1.5 py-0.5 rounded ' + brandBadgeClass + '">' + tEsc(L.brand) + '</span>'
           + (L.date ? ' <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-800 text-white">' + tEsc(L.date) + ' 출시</span>' : '')
-          + '<input value="' + tEsc(L.name) + '" onchange="updateLaunchField(' + L.id + ', \'name\', this.value)" class="block mt-1 px-2 py-1 text-sm font-black text-slate-900 bg-transparent border border-transparent hover:border-slate-200 focus:border-pink-300 rounded-lg outline-none w-full max-w-[380px]">'
+          + '<input value="' + tEsc(L.name) + '" onchange="updateLaunchField(' + L.id + ', \'name\', this.value)" class="block mt-1 px-2 py-1 text-sm font-black text-slate-900 bg-transparent border border-transparent hover:border-slate-200 focus:border-blue-300 rounded-lg outline-none w-full max-w-[380px]">'
           + '</div>'
           + '<div class="flex items-center gap-3">'
           + '<div class="text-right"><div class="text-[10px] text-slate-500 font-semibold">A안 · 제품비 제외</div>'
           + '<div class="text-base font-black text-slate-800">' + launchWon(c.spend) + '</div></div>'
-          + '<div class="text-right border-l border-pink-200 pl-3"><div class="text-[10px] text-slate-500 font-semibold">B안 · 제품+택배 포함</div>'
-          + '<div class="text-lg font-black text-pink-600">' + launchWon(c.total) + '</div></div>'
+          + '<div class="text-right border-l border-blue-200 pl-3"><div class="text-[10px] text-slate-500 font-semibold">B안 · 제품+택배 포함</div>'
+          + '<div class="text-lg font-black text-blue-600">' + launchWon(c.total) + '</div></div>'
           + '<button onclick="duplicateLaunchBudget(' + L.id + ')" title="복제" class="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-500 text-xs"><i class="fa-regular fa-copy"></i></button>'
           + '<button onclick="deleteLaunchBudget(' + L.id + ')" title="삭제" class="w-8 h-8 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-500 text-xs"><i class="fa-solid fa-trash"></i></button>'
           + '</div></div>'
@@ -10690,7 +10859,7 @@
           /* 레뷰 표 */
           + '<div class="px-4 pt-3">'
           + '<div class="flex items-baseline justify-between mb-1.5">'
-          + '<h4 class="text-xs font-black text-slate-700"><i class="fa-solid fa-users-rectangle text-pink-500"></i> 레뷰 체험단 '
+          + '<h4 class="text-xs font-black text-slate-700"><i class="fa-solid fa-users-rectangle text-blue-500"></i> 레뷰 체험단 '
           + '<span class="font-semibold text-slate-400">· 인원만 넣으면 견적서 단가로 자동 계산 (공급가 ' + launchWon(c.revuSupply) + ' + VAT)</span></h4>'
           + '<span class="text-sm font-black text-slate-900">' + launchWon(c.revuTotal) + '</span></div>'
           + '<div class="overflow-x-auto custom-scrollbar"><table class="w-full text-left text-xs min-w-[900px]">'
@@ -10708,7 +10877,7 @@
           /* 그 외 항목 표 */
           + '<div class="px-4 pt-4">'
           + '<div class="flex items-baseline justify-between mb-1.5">'
-          + '<h4 class="text-xs font-black text-slate-700"><i class="fa-solid fa-bullhorn text-pink-500"></i> 인플루언서 · 바이럴 · 내부</h4>'
+          + '<h4 class="text-xs font-black text-slate-700"><i class="fa-solid fa-bullhorn text-blue-500"></i> 인플루언서 · 바이럴 · 내부</h4>'
           + '<span class="text-sm font-black text-slate-900">' + launchWon(c.itemsTotal) + '</span></div>'
           + '<div class="overflow-x-auto custom-scrollbar"><table class="w-full text-left text-xs min-w-[860px]">'
           + '<thead class="text-slate-500 font-bold border-b border-slate-100"><tr>'
@@ -10732,7 +10901,7 @@
           + '<tr class="border-b-2 border-slate-300"><td class="py-2 font-black text-slate-800">A안 · 제품비 제외</td><td class="py-2 text-right font-black text-slate-900">' + launchWon(c.spend) + '</td><td class="py-2 text-right font-black text-slate-500">' + launchMan(c.spend) + '만원</td></tr>'
           + '<tr class="border-b border-slate-100"><td class="py-2 text-slate-600">제품 원가 · ' + (c.units).toLocaleString() + '개 × ' + launchWon(L.unitCost) + '</td><td class="py-2 text-right">' + launchWon(c.product) + '</td><td class="py-2 text-right text-slate-400">' + launchMan(c.product) + '만원</td></tr>'
           + '<tr class="border-b-2 border-slate-200"><td class="py-2 text-slate-600">택배비 · ' + (c.ships).toLocaleString() + '건 × ' + launchWon(L.shipCost) + '</td><td class="py-2 text-right">' + launchWon(c.shipping) + '</td><td class="py-2 text-right text-slate-400">' + launchMan(c.shipping) + '만원</td></tr>'
-          + '<tr><td class="py-2 font-black text-pink-700">B안 · 제품 + 택배 포함</td><td class="py-2 text-right font-black text-pink-600">' + launchWon(c.total) + '</td><td class="py-2 text-right font-black text-pink-600">' + launchMan(c.total) + '만원</td></tr>'
+          + '<tr><td class="py-2 font-black text-blue-700">B안 · 제품 + 택배 포함</td><td class="py-2 text-right font-black text-blue-600">' + launchWon(c.total) + '</td><td class="py-2 text-right font-black text-blue-600">' + launchMan(c.total) + '만원</td></tr>'
           + '</tbody></table></div>'
 
           + '</div>';
@@ -11022,7 +11191,7 @@
         + show.map(n => '<div class="text-[11px] font-bold text-slate-800 truncate" title="' + tEsc(n) + '">· ' + tEsc(n) + '</div>').join('')
         + '</div>';
       if (prods.length > 2) {
-        html += '<button onclick="toggleProductCell(' + p.id + ')" class="mt-1 text-[10px] font-bold text-pink-600 hover:underline whitespace-nowrap">'
+        html += '<button onclick="toggleProductCell(' + p.id + ')" class="mt-1 text-[10px] font-bold text-blue-600 hover:underline whitespace-nowrap">'
           + (open ? '접기' : '+' + (prods.length - 2) + '종 더보기') + '</button>';
       }
       return html;
@@ -11115,7 +11284,7 @@
     // 인플루언서 이름 → 수정 모달 바로 열기
     function nameLinkHtml(p, extra) {
       return '<button onclick="openStepDateModal(' + p.id + ')" title="클릭하면 수정 창이 열려요"'
-        + ' class="text-left font-bold text-slate-900 hover:text-pink-600 hover:underline decoration-dotted underline-offset-2">'
+        + ' class="text-left font-bold text-slate-900 hover:text-blue-600 hover:underline decoration-dotted underline-offset-2">'
         + tEsc(p.realName || '무명') + ' <i class="fa-solid fa-pen text-[9px] text-slate-300"></i></button>'
         + (extra ? '<span class="text-xs font-normal text-slate-500"> ' + extra + '</span>' : '');
     }
@@ -11559,7 +11728,7 @@
           + '<td class="py-2.5 px-3 text-right">' + (r.interaction ? r.interaction.toLocaleString() : '-') + '</td>'
           + '<td class="py-2.5 px-3 text-right">' + (r.clicks ? r.clicks.toLocaleString() : '-') + '</td>'
           + '<td class="py-2.5 px-3 text-right">' + (r.orders ? r.orders.toLocaleString() : '-') + '</td>'
-          + '<td class="py-2.5 px-3 text-right font-bold text-pink-600">' + (r.revenue ? r.revenue.toLocaleString() : '-') + '</td>'
+          + '<td class="py-2.5 px-3 text-right font-bold text-blue-600">' + (r.revenue ? r.revenue.toLocaleString() : '-') + '</td>'
           + '<td class="py-2.5 px-3 text-right text-slate-600">' + (r.cost ? r.cost.toLocaleString() : '-') + '</td>'
           + '<td class="py-2.5 px-3 text-right font-black ' + (roas == null ? 'text-slate-300' : (roas >= 1 ? 'text-emerald-600' : 'text-rose-500')) + '">'
           + (roas == null ? '-' : (roas * 100).toFixed(0) + '%') + '</td>'
@@ -11576,7 +11745,7 @@
           + '<td class="py-3 px-3 text-right">' + T.interaction.toLocaleString() + '</td>'
           + '<td class="py-3 px-3 text-right">' + T.clicks.toLocaleString() + '</td>'
           + '<td class="py-3 px-3 text-right">' + T.orders.toLocaleString() + '</td>'
-          + '<td class="py-3 px-3 text-right text-pink-600">' + T.revenue.toLocaleString() + '</td>'
+          + '<td class="py-3 px-3 text-right text-blue-600">' + T.revenue.toLocaleString() + '</td>'
           + '<td class="py-3 px-3 text-right">' + T.cost.toLocaleString() + '</td>'
           + '<td class="py-3 px-3 text-right">' + (T.cost ? (T.roas * 100).toFixed(0) + '%' : '-') + '</td>'
           + '<td class="py-3 px-3 text-right">' + (T.cpv ? T.cpv.toFixed(1) : '-') + '</td></tr>'
@@ -11645,7 +11814,7 @@
         + '<td class="py-2.5 px-3 font-semibold text-slate-800 max-w-[200px] truncate" title="' + tEsc(pn) + '">' + tEsc(pn) + '</td>'
         + '<td class="py-2.5 px-3 text-center">' + v.n + '</td>'
         + '<td class="py-2.5 px-3 text-right">' + (v.views ? v.views.toLocaleString() : '-') + '</td>'
-        + '<td class="py-2.5 px-3 text-right font-bold text-pink-600">' + (v.revenue ? v.revenue.toLocaleString() : '-') + '</td>'
+        + '<td class="py-2.5 px-3 text-right font-bold text-blue-600">' + (v.revenue ? v.revenue.toLocaleString() : '-') + '</td>'
         + '<td class="py-2.5 px-3 text-right text-slate-600">' + (v.cost ? v.cost.toLocaleString() : '-') + '</td></tr>'
       ).join('') : '<tr><td colspan="5" class="py-6 text-center text-slate-400">데이터 없음</td></tr>';
 
@@ -11785,7 +11954,7 @@
         let channelsHtml = '';
         if (p.channels && p.channels.length > 0) {
           channelsHtml = p.channels.map(c => `
-            <a href="${c.url || '#'}" target="_blank" rel="noopener" class="text-[11px] text-slate-600 hover:text-pink-600 hover:underline inline-flex items-center gap-0.5 bg-slate-50 border border-slate-200 px-1.5 py-0.5 rounded mr-1">
+            <a href="${c.url || '#'}" target="_blank" rel="noopener" class="text-[11px] text-slate-600 hover:text-blue-600 hover:underline inline-flex items-center gap-0.5 bg-slate-50 border border-slate-200 px-1.5 py-0.5 rounded mr-1">
               <i class="fa-solid fa-link text-[9px]"></i> ${c.type} (${c.account || '계정'})
             </a>
           `).join('');
@@ -11799,7 +11968,7 @@
             const isDone = typeof info === 'object' ? info.done : false;
             return `
               <div class="flex items-center gap-1.5 text-[11px] bg-slate-50 px-2 py-1 rounded border border-slate-200 mb-1">
-                <input type="checkbox" ${isDone ? 'checked' : ''} onchange="toggleStepDateDone(${p.id}, '${st}', this.checked)" class="accent-pink-500 w-3.5 h-3.5 cursor-pointer">
+                <input type="checkbox" ${isDone ? 'checked' : ''} onchange="toggleStepDateDone(${p.id}, '${st}', this.checked)" class="accent-blue-500 w-3.5 h-3.5 cursor-pointer">
                 <span class="font-bold ${isDone ? 'line-through text-slate-400' : 'text-slate-700'}">${st}: ${dtVal}</span>
               </div>
             `;
@@ -11807,7 +11976,7 @@
         }
 
         return `
-          <tr class="hover:bg-pink-50/30 transition">
+          <tr class="hover:bg-blue-50/30 transition">
             <td class="py-3 px-3 align-top">
               <input type="checkbox" class="${selCls} accent-${accent}-500 w-4 h-4 cursor-pointer" value="${p.id}">
             </td>
@@ -11824,13 +11993,13 @@
               <div class="flex flex-wrap">${typeHtml}</div>
             </td>
             <td class="py-3 px-3 align-top">
-              <select onchange="updatePplStatus(${p.id}, this.value)" class="px-2 py-1 text-xs border border-pink-200 rounded-lg font-bold text-pink-600 bg-pink-50/40">
+              <select onchange="updatePplStatus(${p.id}, this.value)" class="px-2 py-1 text-xs border border-blue-200 rounded-lg font-bold text-blue-600 bg-blue-50/40">
                 ${STAGES.map(st => `<option value="${st}" ${p.status === st ? 'selected' : ''}>${st}</option>`).join('')}
               </select>
             </td>
             <td class="py-3 px-3 align-top max-w-[240px]">
               <div class="max-h-[100px] overflow-y-auto custom-scrollbar pr-1">${stepDateBadges || '<span class="text-slate-400 text-[11px]">일정 없음</span>'}</div>
-              <button onclick="openStepDateModal(${p.id})" class="mt-1 text-[11px] text-pink-600 font-semibold hover:underline">
+              <button onclick="openStepDateModal(${p.id})" class="mt-1 text-[11px] text-blue-600 font-semibold hover:underline">
                 <i class="fa-solid fa-pen-to-square"></i> 단계별 일자 전체 관리
               </button>
             </td>
@@ -11844,7 +12013,7 @@
                 : `<span class="text-[11px] text-slate-400">배송정보 없음</span>`}
             </td>
             <td class="py-3 px-3 align-top">
-              <div class="font-bold text-pink-600">${p.seedingCount}개 발송</div>
+              <div class="font-bold text-blue-600">${p.seedingCount}개 발송</div>
               <div class="text-[11px] text-slate-500 font-bold">합계: ${totalCost.toLocaleString()}원</div>
               ${(() => { if (!showPkg) return ''; const k = packageOfPpl(p.id); if (!k) return ''; const st = pkgStats(k);
                 return `<div class="mt-1 text-[10px] font-bold text-slate-700 bg-slate-100 border border-slate-200 rounded-lg px-2 py-1 leading-tight">
@@ -12084,7 +12253,7 @@
 
       let html = '';
       for (let i = 0; i < firstDay; i++) {
-        html += `<div class="bg-slate-50/40 p-2 min-h-[110px] border-b border-r border-pink-50"></div>`;
+        html += `<div class="bg-slate-50/40 p-2 min-h-[110px] border-b border-r border-blue-50"></div>`;
       }
 
       for (let day = 1; day <= lastDate; day++) {
@@ -12119,11 +12288,11 @@
         });
 
         const numCls = todayStrCal === dateStr
-          ? 'bg-pink-500 text-white px-1.5 py-0.5 rounded-full'
+          ? 'bg-blue-500 text-white px-1.5 py-0.5 rounded-full'
           : (isRed ? 'text-rose-600' : (isSat ? 'text-blue-600' : 'text-slate-700'));
 
         html += `
-          <div class="${hol ? 'bg-rose-50/50' : (dow === 0 ? 'bg-rose-50/25' : 'bg-white')} p-2 min-h-[110px] border-b border-r border-pink-50 flex flex-col">
+          <div class="${hol ? 'bg-rose-50/50' : (dow === 0 ? 'bg-rose-50/25' : 'bg-white')} p-2 min-h-[110px] border-b border-r border-blue-50 flex flex-col">
             <div class="flex items-center justify-between gap-1">
               <span class="text-xs font-bold ${numCls}">${day}</span>
               ${hol ? `<span class="text-[9px] font-black text-rose-600 bg-rose-100 border border-rose-200 rounded px-1 py-0.5 truncate max-w-[78px]" title="${hol}">${hol}</span>` : ''}
@@ -12149,8 +12318,8 @@
 
       box.innerHTML = filtered.length
         ? filtered.map(p => `
-            <label class="flex items-center gap-1.5 text-[11px] cursor-pointer hover:bg-pink-50 px-1.5 py-1 rounded border border-slate-100">
-              <input type="checkbox" class="edit-product-check accent-pink-500 w-3.5 h-3.5" value="${p.name}" ${chosen.includes(p.name) ? 'checked' : ''}>
+            <label class="flex items-center gap-1.5 text-[11px] cursor-pointer hover:bg-blue-50 px-1.5 py-1 rounded border border-slate-100">
+              <input type="checkbox" class="edit-product-check accent-blue-500 w-3.5 h-3.5" value="${p.name}" ${chosen.includes(p.name) ? 'checked' : ''}>
               <span class="text-slate-700">${p.name}</span>
             </label>`).join('')
         : '<span class="text-[11px] text-slate-400">이 브랜드에 등록된 제품이 없습니다</span>';
@@ -12276,7 +12445,7 @@
           </select>
           <input type="date" value="${date || ''}" class="px-3 py-1.5 text-xs border border-slate-200 rounded-lg edit-date-input bg-white flex-1">
           <label class="flex items-center gap-1 text-[11px] font-semibold text-slate-600 bg-white px-2 py-1 rounded-lg border border-slate-200 cursor-pointer whitespace-nowrap">
-            <input type="checkbox" ${done ? 'checked' : ''} class="edit-stage-done accent-pink-500"> 완료
+            <input type="checkbox" ${done ? 'checked' : ''} class="edit-stage-done accent-blue-500"> 완료
           </label>
           <label class="flex items-center gap-1 text-[11px] font-semibold text-violet-700 bg-violet-50 px-2 py-1 rounded-lg border border-violet-200 cursor-pointer whitespace-nowrap" title="스케줄러 달력에 표시">
             <input type="checkbox" ${sched ? 'checked' : ''} class="edit-stage-sched accent-violet-600"> 📅
@@ -12422,7 +12591,7 @@
 
         const chLinks = (p.channels || []).filter(x => x && (x.url || x.account)).map(x =>
           x.url
-            ? '<a href="' + tEsc(x.url) + '" target="_blank" rel="noopener" class="text-[10px] font-bold px-1.5 py-0.5 bg-pink-50 text-pink-700 border border-pink-100 rounded hover:underline">' + tEsc(x.type || '채널') + '</a>'
+            ? '<a href="' + tEsc(x.url) + '" target="_blank" rel="noopener" class="text-[10px] font-bold px-1.5 py-0.5 bg-blue-50 text-blue-700 border border-blue-100 rounded hover:underline">' + tEsc(x.type || '채널') + '</a>'
             : '<span class="text-[10px] font-bold px-1.5 py-0.5 bg-slate-100 text-slate-500 rounded">' + tEsc(x.type || '채널') + '</span>'
         ).join(' ');
 
@@ -12431,7 +12600,7 @@
           const chDetail = (p.channels || []).length
             ? (p.channels || []).map(x => '<div class="text-[11px] text-slate-700 bg-white border border-slate-100 rounded px-2 py-1 mb-1 truncate">'
                 + '<b>' + tEsc(x.type || '') + '</b> ' + tEsc(x.account || '')
-                + (x.url ? ' <a href="' + tEsc(x.url) + '" target="_blank" rel="noopener" class="text-pink-600 hover:underline">열기</a>' : '') + '</div>').join('')
+                + (x.url ? ' <a href="' + tEsc(x.url) + '" target="_blank" rel="noopener" class="text-blue-600 hover:underline">열기</a>' : '') + '</div>').join('')
             : '<span class="text-[11px] text-slate-400">채널 링크 없음</span>';
 
           const collab = (p.collabLinks || []).length
@@ -12444,7 +12613,7 @@
             : '<span class="text-[11px] text-slate-400">등록된 협업 콘텐츠 없음</span>';
 
           const prods = prodNamesOf(p);
-          detail = '<tr class="bg-pink-50/30"><td colspan="9" class="px-4 py-3">'
+          detail = '<tr class="bg-blue-50/30"><td colspan="9" class="px-4 py-3">'
             + '<div class="grid grid-cols-1 md:grid-cols-4 gap-3">'
             + '<div><div class="text-[10px] font-black text-slate-400 mb-1">SNS 채널</div>' + chDetail + '</div>'
             + '<div><div class="text-[10px] font-black text-slate-400 mb-1">협업 콘텐츠</div>' + collab + '</div>'
@@ -12458,26 +12627,26 @@
             + '</div></div></td></tr>';
         }
 
-        return '<tr class="hover:bg-pink-50/30 transition">'
-          + '<td class="py-2.5 px-3 w-8"><button onclick="toggleInfRow(' + p.id + ')" class="text-slate-400 hover:text-pink-600"><i class="fa-solid ' + (open ? 'fa-chevron-down' : 'fa-chevron-right') + ' text-[10px]"></i></button></td>'
-          + '<td class="py-2.5 px-3"><button onclick="toggleInfRow(' + p.id + ')" class="font-black text-slate-900 hover:text-pink-600 hover:underline decoration-dotted underline-offset-2">' + tEsc(p.realName || '무명') + '</button></td>'
+        return '<tr class="hover:bg-blue-50/30 transition">'
+          + '<td class="py-2.5 px-3 w-8"><button onclick="toggleInfRow(' + p.id + ')" class="text-slate-400 hover:text-blue-600"><i class="fa-solid ' + (open ? 'fa-chevron-down' : 'fa-chevron-right') + ' text-[10px]"></i></button></td>'
+          + '<td class="py-2.5 px-3"><button onclick="toggleInfRow(' + p.id + ')" class="font-black text-slate-900 hover:text-blue-600 hover:underline decoration-dotted underline-offset-2">' + tEsc(p.realName || '무명') + '</button></td>'
           + '<td class="py-2.5 px-3 text-slate-500">' + tEsc(p.influencer || '-') + '</td>'
           + '<td class="py-2.5 px-3"><span class="text-[10px] font-bold px-1.5 py-0.5 rounded ' + brandBadgeClass + '">' + tEsc(p.brand) + '</span> '
           + '<span class="text-[10px] font-bold px-2 py-0.5 rounded-full ' + (CAT_STYLE[cat] || 'bg-slate-100 text-slate-700') + '">' + cat + '</span></td>'
           + '<td class="py-2.5 px-3">' + (p.category ? '<span class="text-[10px] font-bold px-2 py-0.5 bg-slate-100 text-slate-700 rounded-full">' + tEsc(p.category) + '</span>' : '<span class="text-slate-300">-</span>') + '</td>'
           + '<td class="py-2.5 px-3 text-slate-600">' + tEsc(p.followers || '-') + ytStatsBadge(p) + '</td>'
           + '<td class="py-2.5 px-3">' + (chLinks || '<span class="text-slate-300">-</span>') + '</td>'
-          + '<td class="py-2.5 px-3 text-center font-bold ' + (doneCount ? 'text-pink-600' : 'text-slate-300') + '">' + (doneCount ? doneCount + '회' : '-') + '</td>'
+          + '<td class="py-2.5 px-3 text-center font-bold ' + (doneCount ? 'text-blue-600' : 'text-slate-300') + '">' + (doneCount ? doneCount + '회' : '-') + '</td>'
           + '<td class="py-2.5 px-3 text-right whitespace-nowrap">'
           + '<span class="font-bold text-slate-800 mr-2">' + totalCost.toLocaleString() + '원</span>'
           + ((p.channels || []).some(x => isYoutubeUrl(x.url)) ? '<button onclick="analyzeYtForPpl(' + p.id + ')" title="유튜브 채널 분석" class="text-rose-500 hover:text-rose-700 px-1"><i class="fa-brands fa-youtube"></i></button>' : '')
-          + '<button onclick="openStepDateModal(' + p.id + ')" title="전체 수정" class="text-slate-400 hover:text-pink-600 px-1"><i class="fa-solid fa-pen"></i></button>'
+          + '<button onclick="openStepDateModal(' + p.id + ')" title="전체 수정" class="text-slate-400 hover:text-blue-600 px-1"><i class="fa-solid fa-pen"></i></button>'
           + '<button onclick="openInfluencerEdit(' + p.id + ')" title="협업 콘텐츠 · 메모" class="text-slate-400 hover:text-amber-600 px-1"><i class="fa-solid fa-link"></i></button>'
           + '</td></tr>' + detail;
       }).join('');
 
       grid.innerHTML = '<table class="w-full text-left text-xs">'
-        + '<thead class="bg-pink-50/60 text-slate-600 font-semibold border-y border-pink-100"><tr>'
+        + '<thead class="bg-blue-50/60 text-slate-600 font-semibold border-y border-blue-100"><tr>'
         + '<th class="py-3 px-3 w-8"></th><th class="py-3 px-3">이름</th><th class="py-3 px-3">계정</th>'
         + '<th class="py-3 px-3">브랜드 / 구분</th><th class="py-3 px-3">카테고리</th><th class="py-3 px-3">팔로워</th>'
         + '<th class="py-3 px-3">채널</th><th class="py-3 px-3 text-center">진행</th><th class="py-3 px-3 text-right">단가 / 관리</th>'
@@ -12618,14 +12787,14 @@
         if (prop.rows && prop.rows.length > 0) {
           const headers = Object.keys(prop.rows[0]);
           rowsHtml = `
-            <div class="border border-pink-100 rounded-xl overflow-hidden">
+            <div class="border border-blue-100 rounded-xl overflow-hidden">
               <div class="max-h-48 overflow-auto custom-scrollbar">
                 <table class="w-full text-[10px] text-left">
-                  <thead class="bg-pink-50 text-slate-600 font-bold sticky top-0">
+                  <thead class="bg-blue-50 text-slate-600 font-bold sticky top-0">
                     <tr>${headers.map(h => `<th class="py-1.5 px-2 whitespace-nowrap">${h}</th>`).join('')}</tr>
                   </thead>
                   <tbody class="divide-y divide-slate-100">
-                    ${prop.rows.map(r => `<tr class="hover:bg-pink-50/40">${headers.map(h => `<td class="py-1.5 px-2 text-slate-700 whitespace-nowrap">${r[h] || '-'}</td>`).join('')}</tr>`).join('')}
+                    ${prop.rows.map(r => `<tr class="hover:bg-blue-50/40">${headers.map(h => `<td class="py-1.5 px-2 text-slate-700 whitespace-nowrap">${r[h] || '-'}</td>`).join('')}</tr>`).join('')}
                   </tbody>
                 </table>
               </div>
@@ -12638,12 +12807,12 @@
         }
 
         return `
-          <div class="bg-white p-4 rounded-2xl border border-pink-100 shadow-xs space-y-3 flex flex-col justify-between">
+          <div class="bg-white p-4 rounded-2xl border border-blue-100 shadow-xs space-y-3 flex flex-col justify-between">
             <div class="space-y-1">
               <div class="flex justify-between items-center">
                 <span class="text-[10px] font-bold px-2 py-0.5 bg-purple-100 text-purple-700 rounded-full">${prop.company}</span>
                 <div class="flex gap-2 text-xs text-slate-400">
-                  ${prop.fileUrl && prop.fileUrl.includes('/spreadsheets/') ? `<button onclick="refreshProposalSheet(${prop.id})" class="hover:text-pink-600" title="시트 다시 불러오기"><i class="fa-solid fa-rotate"></i></button>` : ''}
+                  ${prop.fileUrl && prop.fileUrl.includes('/spreadsheets/') ? `<button onclick="refreshProposalSheet(${prop.id})" class="hover:text-blue-600" title="시트 다시 불러오기"><i class="fa-solid fa-rotate"></i></button>` : ''}
                   <button onclick="deleteProposal(${prop.id})" class="hover:text-rose-600"><i class="fa-solid fa-trash"></i></button>
                 </div>
               </div>
@@ -12657,7 +12826,7 @@
 
             ${rowsHtml}
 
-            ${prop.fileUrl ? `<a href="${prop.fileUrl}" target="_blank" rel="noopener" class="block text-center py-1.5 bg-pink-500 hover:bg-pink-600 text-white text-[11px] font-semibold rounded-lg shadow-xs"><i class="fa-solid fa-up-right-from-square"></i> 원본 소개서 열기</a>` : ''}
+            ${prop.fileUrl ? `<a href="${prop.fileUrl}" target="_blank" rel="noopener" class="block text-center py-1.5 bg-blue-500 hover:bg-blue-600 text-white text-[11px] font-semibold rounded-lg shadow-xs"><i class="fa-solid fa-up-right-from-square"></i> 원본 소개서 열기</a>` : ''}
           </div>
         `;
       }).join('');
@@ -12721,7 +12890,7 @@
         const brandBadgeClass = p.brand === '온살' ? 'bg-pink-100 text-pink-700' : 'bg-skyblue-100 text-skyblue-700';
 
         return `
-          <div class="bg-white p-4 rounded-2xl border border-pink-100 shadow-xs space-y-3">
+          <div class="bg-white p-4 rounded-2xl border border-blue-100 shadow-xs space-y-3">
             <div class="flex justify-between items-center">
               <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${brandBadgeClass}">${p.brand}</span>
             </div>
@@ -12747,7 +12916,7 @@
             <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${log.type === '입고' ? 'bg-blue-100 text-blue-700' : 'bg-amber-100 text-amber-700'}">${log.type}</span>
           </td>
           <td class="py-3 px-3">
-            <span class="text-[10px] font-semibold text-pink-600">${log.brand}</span>
+            <span class="text-[10px] font-semibold text-blue-600">${log.brand}</span>
             <div class="font-bold text-slate-800">${log.productName}</div>
           </td>
           <td class="py-3 px-3 font-black ${log.type === '입고' ? 'text-blue-600' : 'text-rose-600'}">${log.type === '입고' ? '+' : '-'}${log.quantity}개</td>
@@ -12856,7 +13025,7 @@
       tbody.innerHTML = filtered.map(item => {
         const brandBadge = item.brand === '온살' ? 'bg-pink-50 text-pink-600 border-pink-200' : 'bg-skyblue-50 text-skyblue-600 border-skyblue-200';
         return `
-          <tr class="hover:bg-pink-50/20 transition">
+          <tr class="hover:bg-blue-50/20 transition">
             <td class="py-3 px-3 align-top">
               <span class="px-2 py-0.5 rounded text-[10px] font-bold border ${brandBadge}">${item.brand}</span>
               <div class="font-bold text-slate-900 mt-1">${item.name || '미지정'}</div>
@@ -12875,7 +13044,7 @@
                 : `<button onclick="makeShortForItem(${item.id}, this)" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-600 text-[10px] font-semibold rounded"><i class="fa-solid fa-link"></i> 단축 만들기</button>`}
             </td>
             <td class="py-3 px-3 align-top text-center space-y-1">
-              <button onclick="copyUtmUrl(this, '${item.url}')" class="w-full px-2.5 py-1 bg-pink-100 hover:bg-pink-200 text-pink-700 text-xs font-semibold rounded-lg transition shadow-xs whitespace-nowrap">
+              <button onclick="copyUtmUrl(this, '${item.url}')" class="w-full px-2.5 py-1 bg-blue-100 hover:bg-blue-200 text-blue-700 text-xs font-semibold rounded-lg transition shadow-xs whitespace-nowrap">
                 <i class="fa-solid fa-copy"></i> 원본
               </button>
               ${item.shortUrl
@@ -12883,7 +13052,7 @@
                 : ''}
             </td>
             <td class="py-3 px-3 align-top min-w-[150px]">
-              <input type="text" value="${(item.note || '').replace(/"/g, '&quot;')}" onchange="updateUtmNote(${item.id}, this.value)" placeholder="메모 입력" class="w-full px-2 py-1 text-[11px] border border-slate-200 rounded-lg bg-amber-50/40 focus:bg-white focus:border-pink-300 outline-none">
+              <input type="text" value="${(item.note || '').replace(/"/g, '&quot;')}" onchange="updateUtmNote(${item.id}, this.value)" placeholder="메모 입력" class="w-full px-2 py-1 text-[11px] border border-slate-200 rounded-lg bg-amber-50/40 focus:bg-white focus:border-blue-300 outline-none">
             </td>
             <td class="py-3 px-3 align-top text-right whitespace-nowrap">
               <div class="flex gap-1 justify-end">
@@ -13597,12 +13766,12 @@
 
       bar.innerHTML = r.tabs.map(t => {
         const on = t.id === rptCurTab;
-        return `<span class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full border text-[11.5px] font-bold cursor-pointer transition ${on ? 'bg-pink-500 text-white border-pink-500' : 'bg-white text-slate-500 border-slate-200 hover:border-pink-300'}"
+        return `<span class="inline-flex items-center gap-1 px-3 py-1.5 rounded-full border text-[11.5px] font-bold cursor-pointer transition ${on ? 'bg-blue-500 text-white border-blue-500' : 'bg-white text-slate-500 border-slate-200 hover:border-blue-300'}"
             onclick="rptSwitchTab('${tArg(t.id)}')" ondblclick="rptRenameTab('${tArg(t.id)}')" title="더블클릭하면 이름을 바꿀 수 있어요">
             ${tEsc(t.name)}
             <i class="fa-solid fa-xmark opacity-60 hover:opacity-100" onclick="event.stopPropagation();rptDeleteTab('${tArg(t.id)}')"></i>
           </span>`;
-      }).join('') + `<button onclick="rptAddTab()" class="px-3 py-1.5 rounded-full border border-dashed border-pink-300 text-pink-600 text-[11.5px] font-bold hover:bg-pink-50"><i class="fa-solid fa-plus"></i> 탭 추가</button>`;
+      }).join('') + `<button onclick="rptAddTab()" class="px-3 py-1.5 rounded-full border border-dashed border-blue-300 text-blue-600 text-[11.5px] font-bold hover:bg-blue-50"><i class="fa-solid fa-plus"></i> 탭 추가</button>`;
 
       const t = rptTabObj();
       ed.innerHTML = (t && t.html) || '';
@@ -13970,7 +14139,7 @@
       done.sort((a, b) => (lastUploadDateOf(b) || '').localeCompare(lastUploadDateOf(a) || ''));
       box.innerHTML = done.map(p => {
         const ups = uploadsOf(p);
-        return `<label class="flex items-start gap-3 p-3 rounded-xl border border-slate-200 hover:bg-pink-50/40 cursor-pointer">
+        return `<label class="flex items-start gap-3 p-3 rounded-xl border border-slate-200 hover:bg-blue-50/40 cursor-pointer">
           <input type="checkbox" class="rpt-imp mt-0.5" value="${tEsc(p.id)}">
           <div class="flex-1 min-w-0">
             <div class="text-xs font-bold text-slate-800">${tEsc(p.brand)} · ${tEsc(whoOf(p))}</div>
@@ -14098,7 +14267,7 @@
       await pullFromSheet();
       const r = rptReports.find(x => x.id === id);
       if (!r) { v.innerHTML = '<p class="text-sm text-slate-500 py-16 text-center">리포트를 찾을 수 없습니다. 링크를 다시 확인해 주세요.</p>'; return; }
-      v.innerHTML = '<div class="bg-white rounded-2xl border border-pink-100 shadow-sm p-6 sm:p-8">'
+      v.innerHTML = '<div class="bg-white rounded-2xl border border-blue-100 shadow-sm p-6 sm:p-8">'
         + '<div class="flex flex-wrap items-start justify-between gap-3 mb-5">'
         + '<div><h1 class="text-lg font-extrabold text-slate-900">' + tEsc(r.title) + '</h1>'
         + '<p class="text-[11px] text-slate-400 mt-1">보기 전용 · 마지막 수정 ' + tEsc((r.updatedAt || '').slice(0, 10)) + '</p></div>'
@@ -14125,7 +14294,7 @@
       const r = window.__rptViewReport; if (!r) return;
       const t = (r.tabs || []).find(x => x.id === tabId) || (r.tabs || [])[0];
       document.getElementById('rptViewTabs').innerHTML = (r.tabs || []).map(x =>
-        `<button onclick="rptViewerTab('${tArg(x.id)}')" class="px-3 py-1.5 rounded-full border text-[11.5px] font-bold ${x.id === (t || {}).id ? 'bg-pink-500 text-white border-pink-500' : 'bg-white text-slate-500 border-slate-200'}">${tEsc(x.name)}</button>`
+        `<button onclick="rptViewerTab('${tArg(x.id)}')" class="px-3 py-1.5 rounded-full border text-[11.5px] font-bold ${x.id === (t || {}).id ? 'bg-blue-500 text-white border-blue-500' : 'bg-white text-slate-500 border-slate-200'}">${tEsc(x.name)}</button>`
       ).join('');
       const body = document.getElementById('rptViewBody');
       body.innerHTML = (t && t.html) || '<p class="text-slate-400 text-sm">내용 없음</p>';
@@ -15637,16 +15806,16 @@
     <div class="bg-white rounded-3xl w-full max-w-4xl max-h-[92vh] overflow-y-auto custom-scrollbar shadow-2xl">
       <div class="sticky top-0 bg-white px-6 py-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-2 z-10">
         <div>
-          <h3 class="text-base font-bold text-slate-900 flex items-center gap-2"><i class="fa-solid fa-boxes-packing text-pink-500"></i> 브랜드별 제품 관리</h3>
+          <h3 class="text-base font-bold text-slate-900 flex items-center gap-2"><i class="fa-solid fa-boxes-packing text-blue-500"></i> 브랜드별 제품 관리</h3>
           <p class="text-xs text-slate-500 mt-0.5">여기서 등록한 제품이 PPL · 컨택 · 체험단의 제품 선택 목록에 나타납니다.</p>
         </div>
         <div class="flex items-center gap-2">
-          <div class="flex p-1 bg-pink-50 rounded-xl border border-pink-100 text-xs font-semibold">
-            <button onclick="switchBrandTab('전체')" id="tab-전체" class="px-3.5 py-1.5 rounded-lg bg-white text-pink-600 shadow-xs">전체</button>
+          <div class="flex p-1 bg-blue-50 rounded-xl border border-blue-100 text-xs font-semibold">
+            <button onclick="switchBrandTab('전체')" id="tab-전체" class="px-3.5 py-1.5 rounded-lg bg-white text-blue-600 shadow-xs">전체</button>
             <button onclick="switchBrandTab('온살')" id="tab-온살" class="px-3.5 py-1.5 rounded-lg text-slate-500 hover:text-slate-800">온살</button>
             <button onclick="switchBrandTab('루메아카이브')" id="tab-루메아카이브" class="px-3.5 py-1.5 rounded-lg text-slate-500 hover:text-slate-800">루메아카이브</button>
           </div>
-          <button onclick="openProductModal()" class="px-3 py-1.5 bg-pink-500 hover:bg-pink-600 text-white text-xs font-semibold rounded-xl shadow-xs transition flex items-center gap-1">
+          <button onclick="openProductModal()" class="px-3 py-1.5 bg-blue-500 hover:bg-blue-600 text-white text-xs font-semibold rounded-xl shadow-xs transition flex items-center gap-1">
             <i class="fa-solid fa-plus"></i> 새 제품 등록
           </button>
           <button onclick="closeProductListModal()" class="text-slate-400 hover:text-slate-700 p-2"><i class="fa-solid fa-xmark text-lg"></i></button>
@@ -15662,13 +15831,13 @@
   <main data-page="1" id="page-report" class="app-main max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-5 hidden">
 
     <!-- 리포트 선택 바 -->
-    <section class="bg-white p-3 rounded-2xl border border-pink-100 shadow-xs flex flex-wrap items-center gap-2">
+    <section class="bg-white p-3 rounded-2xl border border-blue-100 shadow-xs flex flex-wrap items-center gap-2">
       <div class="flex items-center gap-2 flex-1 min-w-[240px]">
-        <i class="fa-solid fa-chart-line text-pink-500"></i>
+        <i class="fa-solid fa-chart-line text-blue-500"></i>
         <select id="rptReportSelect" onchange="rptSelectReport(this.value)"
-          class="flex-1 min-w-[180px] px-3 py-2 text-xs font-bold border border-pink-200 rounded-xl bg-white"></select>
+          class="flex-1 min-w-[180px] px-3 py-2 text-xs font-bold border border-blue-200 rounded-xl bg-white"></select>
       </div>
-      <button onclick="rptNewReport()" class="px-3 py-2 bg-pink-500 hover:bg-pink-600 text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5">
+      <button onclick="rptNewReport()" class="px-3 py-2 bg-blue-500 hover:bg-blue-600 text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5">
         <i class="fa-solid fa-plus"></i> 새 리포트
       </button>
       <button onclick="rptRenameReport()" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-bold rounded-xl transition flex items-center gap-1.5">
@@ -15699,10 +15868,10 @@
     </section>
 
     <!-- 리포트 카드 -->
-    <section id="rptCard" class="bg-white rounded-2xl border border-pink-100 shadow-sm">
+    <section id="rptCard" class="bg-white rounded-2xl border border-blue-100 shadow-sm">
       <div class="px-5 pt-4 pb-2 flex flex-wrap items-center justify-between gap-2">
         <h2 class="text-sm font-extrabold text-slate-800 flex items-center gap-2">
-          <span class="w-2 h-2 rounded-full bg-pink-500"></span>
+          <span class="w-2 h-2 rounded-full bg-blue-500"></span>
           <span id="rptCardTitle">PPL 보고 (인플루언서별)</span>
         </h2>
         <span class="text-[11px] font-semibold text-slate-400">인플루언서별로 탭을 나눠 자유롭게 정리하세요</span>
@@ -15710,7 +15879,7 @@
 
       <!-- 탭 바 -->
       <div id="rptTabBar" class="px-5 pb-2 flex flex-wrap items-center gap-1.5"></div>
-      <p class="px-5 pb-3 text-[11px] font-semibold text-pink-600">
+      <p class="px-5 pb-3 text-[11px] font-semibold text-blue-600">
         <i class="fa-solid fa-lightbulb"></i> 탭 이름을 <b>더블클릭</b>하면 바꿀 수 있어요. 대시보드에서 복사한 표를 그대로 붙여넣어도 됩니다.
       </p>
 
