@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>온살 · 루메아카이브 예산 현황</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{
+  --ink:#141b2e; --ink-60:#5b6480; --ink-30:#9aa2b8;
+  --paper:#f7f6f3; --card:#ffffff; --rule:#e4e2dc;
+  --onsal:#d4356b; --lume:#2f7fb5; --spend:#141b2e; --left:#1f9d76; --over:#c2410c;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:Pretendard,-apple-system,sans-serif;font-size:14px;line-height:1.55;
+  font-feature-settings:"tnum";}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 22px 80px}
+.bar{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;justify-content:space-between;
+  padding-bottom:16px;border-bottom:2px solid var(--ink)}
+h1{font-size:19px;font-weight:800;margin:0;letter-spacing:-.02em}
+.sub{font-size:12px;color:var(--ink-60);margin-top:2px}
+.ctl{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+select,button{font-family:inherit;font-size:13px;border:1px solid var(--rule);background:var(--card);
+  color:var(--ink);border-radius:9px;padding:7px 11px;cursor:pointer}
+button:hover{border-color:var(--ink-30)}
+button.go{background:var(--ink);color:#fff;border-color:var(--ink);font-weight:700}
+.seg{display:flex;border:1px solid var(--rule);border-radius:9px;overflow:hidden;background:var(--card)}
+.seg button{border:0;border-radius:0;padding:7px 14px;font-weight:600;color:var(--ink-60)}
+.seg button.on{background:var(--ink);color:#fff}
+.hero{margin:26px 0 10px;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:34px;align-items:end}
+@media(max-width:800px){.hero{grid-template-columns:1fr;gap:20px}}
+.big{font-size:clamp(40px,7vw,64px);font-weight:800;letter-spacing:-.035em;line-height:1}
+.big small{font-size:.34em;font-weight:600;color:var(--ink-60);margin-left:6px;letter-spacing:0}
+.heroLabel{font-size:12px;color:var(--ink-60);margin-bottom:6px}
+.meter{height:12px;background:#e9e7e1;border-radius:99px;overflow:hidden;display:flex;margin:10px 0 8px}
+.meter i{display:block;height:100%}
+.legend{display:flex;gap:16px;font-size:12px;color:var(--ink-60);flex-wrap:wrap}
+.legend b{color:var(--ink);font-weight:700}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:5px;vertical-align:1px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin:22px 0}
+.kpi{background:var(--card);border:1px solid var(--rule);border-radius:13px;padding:15px 16px}
+.kpi span{font-size:11.5px;color:var(--ink-60);font-weight:600}
+.kpi strong{display:block;font-size:25px;font-weight:800;letter-spacing:-.02em;margin-top:3px}
+.kpi em{font-style:normal;font-size:11px;color:var(--ink-30);display:block;margin-top:2px}
+h2{font-size:13px;font-weight:800;margin:30px 0 10px;letter-spacing:-.01em}
+table{width:100%;border-collapse:collapse;background:var(--card);
+  border:1px solid var(--rule);border-radius:13px;overflow:hidden}
+th,td{padding:10px 13px;text-align:left;border-bottom:1px solid var(--rule);font-size:13px}
+th{background:#faf9f7;font-weight:700;font-size:11.5px;color:var(--ink-60)}
+tr:last-child td{border-bottom:0}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+tr.sum td{font-weight:800;background:#faf9f7}
+.tag{display:inline-block;padding:2px 8px;border-radius:99px;font-size:11px;font-weight:700}
+.t-onsal{background:#fce7ef;color:var(--onsal)} .t-lume{background:#e2f0fa;color:var(--lume)}
+.bar2{height:7px;background:#eceae4;border-radius:99px;overflow:hidden;min-width:70px}
+.bar2 i{display:block;height:100%;background:var(--spend)}
+.muted{color:var(--ink-30)}
+.pos{color:var(--left);font-weight:700} .neg{color:var(--over);font-weight:700}
+.note{font-size:12px;color:var(--ink-60);margin-top:8px}
+.state{padding:60px 20px;text-align:center;color:var(--ink-60)}
+.state b{display:block;font-size:16px;color:var(--ink);margin-bottom:6px}
+.badge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px;background:#eef1f6;color:var(--ink-60)}
+.badge.live{background:#e6f5ef;color:var(--left)}
+.badge.err{background:#fdeae1;color:var(--over)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="bar">
+    <div>
+      <h1>온살 · 루메아카이브 예산 현황</h1>
+      <div class="sub">PPL 대시보드 데이터를 <b>읽기 전용</b>으로 불러옵니다. 이 화면에서는 원본이 바뀌지 않아요.</div>
+    </div>
+    <div class="ctl">
+      <span id="stat" class="badge">연결 대기</span>
+      <select id="ym"></select>
+      <div class="seg" id="brandSeg">
+        <button data-b="전체" class="on">전체</button>
+        <button data-b="온살">온살</button>
+        <button data-b="루메아카이브">루메아카이브</button>
+      </div>
+      <button class="go" onclick="load()"><i class="fa-solid fa-rotate"></i> 새로고침</button>
+      <button onclick="cfg()"><i class="fa-solid fa-gear"></i></button>
+    </div>
+  </div>
+
+  <div id="body"><div class="state">불러오는 중…</div></div>
+</div>
+
+<script>
+const LS='onsal_budgetView';
+let CFG=Object.assign({api:'',key:'khj327'},JSON.parse(localStorage.getItem(LS)||'{}'));
+let D={}, YM='', BRAND='전체';
+
+const won=n=>(Number(n)||0).toLocaleString()+'원';
+const man=n=>{const v=Math.round((Number(n)||0)/10000);return v.toLocaleString()+'만';};
+const el=id=>document.getElementById(id);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function cfg(){
+  const a=prompt('PPL 대시보드 앱스스크립트 /exec 주소',CFG.api||'');
+  if(a===null)return;
+  const k=prompt('SYNC_KEY',CFG.key||'khj327');
+  if(k===null)return;
+  CFG={api:a.trim().replace(/\s/g,''),key:k.trim()};
+  localStorage.setItem(LS,JSON.stringify(CFG));
+  load();
+}
+
+function expand(d){
+  Object.keys(d).forEach(k=>{
+    if(!/__cn$/.test(k))return;
+    const base=k.slice(0,-4),n=Number(d[k])||0;
+    if(!n)return;let s='';
+    for(let i=0;i<n;i++)s+=(d[base+'__c'+i]||'');
+    try{d[base]=JSON.parse(s)}catch(e){}
+  });
+  return d;
+}
+
+async function load(){
+  if(!CFG.api){el('body').innerHTML='<div class="state"><b>연결 설정이 필요합니다</b>오른쪽 위 톱니 버튼을 눌러 PPL 대시보드의 /exec 주소와 키를 입력하세요.</div>';return;}
+  el('stat').className='badge';el('stat').textContent='불러오는 중…';
+  try{
+    const r=await fetch(CFG.api+'?key='+encodeURIComponent(CFG.key)+'&t='+Date.now());
+    const j=await r.json();
+    if(!j.ok)throw new Error(j.error||'load failed');
+    D=expand(j.data||{});
+    el('stat').className='badge live';
+    el('stat').textContent='연결됨 · '+new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'});
+    buildMonths();render();
+  }catch(e){
+    el('stat').className='badge err';el('stat').textContent='연결 실패';
+    el('body').innerHTML='<div class="state"><b>데이터를 불러오지 못했습니다</b>'+esc(e.message)+'<br>톱니 버튼에서 주소와 키를 확인해 주세요.</div>';
+  }
+}
+
+/* ---------- 집계 ---------- */
+const ppl=()=>D.onsal_pplList||[];
+const trials=()=>D.onsal_trialList||[];
+const roster=()=>D.onsal_creRoster||[];
+const budgets=()=>D.onsal_budgets||[];
+
+const totalCostOf=p=>{const c=p.costs||{};return ['branded','ppl','reuse','microReels','microPpl','reels','shorts','ambassador','sample','creator','supporters','viral'].reduce((a,k)=>a+(Number(c[k])||0),0);};
+const costOf=p=>(p.payment&&Number(p.payment.total)>0)?Number(p.payment.total):totalCostOf(p);
+const T=p=>p.types||{};
+const catOf=p=>T(p).viral?'바이럴/기타':T(p).freeAmb?'무상앰버서더':(T(p).ambassador||T(p).sample)?'앰버서더':T(p).supporters?'크리에이터':T(p).creator?'인플루언서':(T(p).microPpl||T(p).microReels)?'마이크로':'PPL';
+const CATS=['PPL','앰버서더','무상앰버서더','인플루언서','크리에이터','마이크로','바이럴/기타','체험단'];
+
+function uploadYm(p){
+  const u=(p.uploads||[]).filter(x=>x&&x.date).map(x=>x.date).sort()[0];
+  if(u)return u.slice(0,7);
+  const sd=(p.stepDates||{})['업로드'];
+  const d=sd?(typeof sd==='object'?sd.date:sd):'';
+  return d?d.slice(0,7):'';
+}
+function trialYm(t){
+  const s=t.stages||{};
+  for(const k of ['후기 작성 마감일','후기 작성 시작일','당첨자 발표일','모집 시작일']){
+    const v=s[k]&&s[k].date; if(v)return v.slice(0,7);
+  }
+  return (t.openDate||'').slice(0,7);
+}
+
+/* 월별 집행 행 */
+function rows(ym){
+  const out=[];
+  ppl().forEach(p=>{
+    if(uploadYm(p)!==ym)return;
+    const amt=costOf(p);
+    out.push({cat:catOf(p),brand:p.brand||'온살',
+      who:(p.realName||'무명')+(p.influencer?' ('+p.influencer+')':''),
+      sub:((p.productList&&p.productList.length?p.productList:[p.product]).filter(Boolean).join(', ')),
+      amt, paid:paidOf(p)});
+  });
+  trials().forEach(t=>{
+    if(trialYm(t)!==ym)return;
+    out.push({cat:'체험단',brand:t.brand||'온살',
+      who:(t.title||'체험단')+' · '+(t.headcount||0)+'명',
+      sub:(t.platform||'')+' '+(t.product||''),
+      amt:Number(t.cost)||0, paid:paidOf(t)});
+  });
+  /* 크리에이터 활동비 — creRoster 월별 */
+  const rate=Object.assign({base:30000,bonus:20000},D.onsal_creRate||{});
+  let cnt=0,base=0,bonus=0,paidAmt=0;
+  roster().forEach(c=>{
+    const m=(c.months||{})[ym]; if(!m||!(m.m1||m.m2))return;
+    cnt++;
+    const b=Number(rate.base)||0;
+    const n=(Number(m.top)>0||/상위노출\s*성공/.test(m.note||''))?(Number(rate.bonus)||0):0;
+    base+=b;bonus+=n;
+    if(m.paidBase)paidAmt+=b; if(m.paidBonus)paidAmt+=n;
+  });
+  if(cnt)out.push({cat:'크리에이터',brand:'온살',who:'크리에이터 활동비 '+cnt+'명',
+    sub:'기본 '+won(base)+' + 상위노출 '+won(bonus),amt:base+bonus,paid:paidAmt});
+  return out.filter(r=>BRAND==='전체'||r.brand===BRAND);
+}
+
+function paidOf(rec){
+  const it=(rec.payment&&rec.payment.items)||[];
+  if(!it.length)return 0;
+  return it.reduce((a,x)=>a+(x.paid?(Number(x.amount)||0):0),0);
+}
+
+function budgetOf(ym){
+  const b=budgets().find(x=>x&&x.month===ym);
+  if(!b)return {total:0,byCat:{}};
+  let total=0;const byCat={};
+  (b.lines||[]).forEach(l=>{
+    if(BRAND!=='전체'&&l.brand&&l.brand!==BRAND)return;
+    const v=Number(l.amount)||0;total+=v;
+    const c=l.cat||l.category||'기타';byCat[c]=(byCat[c]||0)+v;
+  });
+  return {total,byCat,memo:b.memo||''};
+}
+
+function buildMonths(){
+  const set=new Set();
+  ppl().forEach(p=>{const y=uploadYm(p);if(y)set.add(y);});
+  trials().forEach(t=>{const y=trialYm(t);if(y)set.add(y);});
+  roster().forEach(c=>Object.keys(c.months||{}).forEach(m=>{
+    const x=(c.months[m]||{});if(x.m1||x.m2)set.add(m);}));
+  budgets().forEach(b=>b&&b.month&&set.add(b.month));
+  const now=new Date();set.add(now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0'));
+  const arr=[...set].sort().reverse();
+  if(!YM||!arr.includes(YM))YM=arr[0];
+  el('ym').innerHTML=arr.map(m=>'<option'+(m===YM?' selected':'')+'>'+m+'</option>').join('');
+}
+
+/* ---------- 렌더 ---------- */
+function render(){
+  const rs=rows(YM);
+  const spend=rs.reduce((a,r)=>a+r.amt,0);
+  const paid=rs.reduce((a,r)=>a+r.paid,0);
+  const bud=budgetOf(YM);
+  const left=bud.total-spend;
+  const pct=bud.total?Math.min(100,Math.round(spend/bud.total*100)):0;
+
+  const byCat={},byBrand={'온살':0,'루메아카이브':0};
+  rs.forEach(r=>{byCat[r.cat]=(byCat[r.cat]||0)+r.amt;byBrand[r.brand]=(byBrand[r.brand]||0)+r.amt;});
+
+  const heroRight = bud.total
+    ? `<div>
+         <div class="heroLabel">예산 ${won(bud.total)} 대비</div>
+         <div class="meter">
+           <i style="width:${pct}%;background:var(--spend)"></i>
+           <i style="width:${100-pct}%;background:#e9e7e1"></i>
+         </div>
+         <div class="legend">
+           <span><i class="dot" style="background:var(--spend)"></i>집행 <b>${man(spend)}</b></span>
+           <span><i class="dot" style="background:#cfcbc2"></i>잔액 <b class="${left<0?'neg':'pos'}">${man(left)}</b></span>
+           <span>집행률 <b>${pct}%</b></span>
+         </div>
+       </div>`
+    : `<div class="note">이 달 예산이 등록되어 있지 않습니다. PPL 대시보드 <b>정산·예산</b>에서 월 예산을 입력하면 집행률이 표시됩니다.</div>`;
+
+  el('body').innerHTML=`
+    <div class="hero">
+      <div>
+        <div class="heroLabel">${YM.slice(0,4)}년 ${Number(YM.slice(5))}월 집행액${BRAND==='전체'?'':' · '+BRAND}</div>
+        <div class="big">${man(spend)}<small>원</small></div>
+        <div class="note">건수 ${rs.length}건 · 지급 완료 ${won(paid)} · 미지급 ${won(spend-paid)}</div>
+      </div>
+      ${heroRight}
+    </div>
+
+    <div class="grid">
+      <div class="kpi"><span>온살</span><strong>${man(byBrand['온살'])}</strong><em>${won(byBrand['온살'])}</em></div>
+      <div class="kpi"><span>루메아카이브</span><strong>${man(byBrand['루메아카이브'])}</strong><em>${won(byBrand['루메아카이브'])}</em></div>
+      <div class="kpi"><span>지급 완료</span><strong>${man(paid)}</strong><em>${spend?Math.round(paid/spend*100):0}% 처리</em></div>
+      <div class="kpi"><span>미지급</span><strong>${man(spend-paid)}</strong><em>${rs.filter(r=>r.amt>r.paid).length}건 남음</em></div>
+    </div>
+
+    <h2>구분별 집행</h2>
+    <table><thead><tr><th>구분</th><th class="n">집행액</th><th class="n">예산</th><th class="n">잔액</th><th style="width:22%">비중</th></tr></thead><tbody>
+      ${CATS.filter(c=>byCat[c]||bud.byCat[c]).map(c=>{
+        const s=byCat[c]||0,b=bud.byCat[c]||0,l=b-s;
+        return `<tr><td>${c}</td><td class="n">${won(s)}</td>
+          <td class="n ${b?'':'muted'}">${b?won(b):'—'}</td>
+          <td class="n ${b?(l<0?'neg':'pos'):'muted'}">${b?won(l):'—'}</td>
+          <td><div class="bar2"><i style="width:${spend?Math.round(s/spend*100):0}%"></i></div></td></tr>`;
+      }).join('')||'<tr><td colspan="5" class="muted">집행 내역이 없습니다.</td></tr>'}
+      <tr class="sum"><td>합계</td><td class="n">${won(spend)}</td><td class="n">${bud.total?won(bud.total):'—'}</td>
+        <td class="n ${bud.total?(left<0?'neg':'pos'):'muted'}">${bud.total?won(left):'—'}</td><td></td></tr>
+    </tbody></table>
+
+    <h2>집행 내역</h2>
+    <table><thead><tr><th>구분</th><th>브랜드</th><th>대상</th><th class="n">금액</th><th class="n">지급</th></tr></thead><tbody>
+      ${rs.slice().sort((a,b)=>b.amt-a.amt).map(r=>`<tr>
+        <td>${r.cat}</td>
+        <td><span class="tag ${r.brand==='온살'?'t-onsal':'t-lume'}">${esc(r.brand)}</span></td>
+        <td>${esc(r.who)}${r.sub?'<div class="muted" style="font-size:11.5px">'+esc(r.sub)+'</div>':''}</td>
+        <td class="n">${won(r.amt)}</td>
+        <td class="n ${r.paid>=r.amt&&r.amt?'pos':(r.paid?'':'muted')}">${r.amt?(r.paid>=r.amt?'완료':(r.paid?won(r.paid):'미지급')):'—'}</td>
+      </tr>`).join('')||'<tr><td colspan="5" class="muted">이 달 집행 내역이 없습니다.</td></tr>'}
+    </tbody></table>
+    ${bud.memo?'<div class="note"><b>예산 메모</b> · '+esc(bud.memo)+'</div>':''}
+    <div class="note">금액은 PPL 대시보드의 계약 단가와 지급 체크를 그대로 가져옵니다. 수정은 PPL 대시보드에서 해주세요.</div>
+  `;
+}
+
+el('ym').addEventListener('change',e=>{YM=e.target.value;render();});
+el('brandSeg').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b)return;
+  BRAND=b.dataset.b;
+  [...el('brandSeg').children].forEach(x=>x.classList.toggle('on',x===b));
+  render();
+});
+load();
+</script>
+</body>
+</html>
